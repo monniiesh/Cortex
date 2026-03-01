@@ -29,14 +29,16 @@ root ::= "[" ws item ("," ws item)* ws "]"
 item ::= "{" ws
   "\\"type\\"" ws ":" ws type "," ws
   "\\"text\\"" ws ":" ws string "," ws
-  "\\"file\\"" ws ":" ws string "," ws
-  "\\"new_file\\"" ws ":" ws boolean "," ws
+  "\\"files\\"" ws ":" ws filearray "," ws
+  "\\"new_path\\"" ws ":" ws (string | "null") "," ws
   "\\"datetime\\"" ws ":" ws (string | "null") "," ws
   "\\"native_action\\"" ws ":" ws boolean
 ws "}"
 type ::= "\\"note\\"" | "\\"todo\\"" | "\\"reminder\\"" | "\\"event\\""
 boolean ::= "true" | "false"
 string ::= "\\"" ([^"\\\\] | "\\\\" .)* "\\""
+filearray ::= "[" ws "]" | "[" ws fileid ("," ws fileid)* ws "]"
+fileid ::= "\\"f" [0-9] "\\"" | "\\"f1" [0-9] "\\""
 ws ::= [ \\t\\n]*
 """
 

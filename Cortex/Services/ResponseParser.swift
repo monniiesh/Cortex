@@ -5,16 +5,14 @@ struct ResponseParser {
     struct ParsedItem: Codable {
         var type: String
         var text: String
-        var file: String
-        var newFile: Bool
+        var files: [String]
+        var newPath: String?
         var datetime: String?
         var nativeAction: Bool
 
         enum CodingKeys: String, CodingKey {
-            case type
-            case text
-            case file
-            case newFile = "new_file"
+            case type, text, files
+            case newPath = "new_path"
             case datetime
             case nativeAction = "native_action"
         }
@@ -58,8 +56,8 @@ struct ResponseParser {
             ParsedItem(
                 type: "note",
                 text: raw,
-                file: "tasks/unprocessed.md",
-                newFile: true,
+                files: ["tasks/unprocessed.md"],
+                newPath: nil,
                 datetime: nil,
                 nativeAction: false
             )

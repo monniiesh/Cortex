@@ -1,5 +1,10 @@
 import Foundation
 
+struct RoutedTarget {
+    let file: String
+    let isNew: Bool
+}
+
 struct VaultRouter {
 
     static func route(suggestedFile: String, availableFiles: [String]) -> (file: String, isNew: Bool) {
@@ -66,5 +71,25 @@ struct VaultRouter {
 
         // step 5 — no match, treat as new file
         return (suggestedFile, true)
+    }
+
+    static func routeMultiple(suggestedFiles: [String], availableFiles: [String]) -> [RoutedTarget] {
+        var seen = Set<String>()
+        var results: [RoutedTarget] = []
+
+        for suggested in suggestedFiles {
+            let resolved = route(suggestedFile: suggested, availableFiles: availableFiles)
+            let normalized = resolved.file.lowercased()
+            if !seen.contains(normalized) {
+                seen.insert(normalized)
+                results.append(RoutedTarget(file: resolved.file, isNew: resolved.isNew))
+            }
+        }
+
+        if results.isEmpty {
+            return [RoutedTarget(file: "tasks/unprocessed.md", isNew: true)]
+        }
+
+        return results
     }
 }

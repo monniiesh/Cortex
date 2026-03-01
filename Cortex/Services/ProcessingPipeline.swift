@@ -39,7 +39,7 @@ class ProcessingPipeline {
 
         for item in items {
             do {
-                // transcribe
+                // [1] TRANSCRIBE
                 item.status = .transcribing
                 currentStep = "Transcribing..."
 
@@ -47,20 +47,23 @@ class ProcessingPipeline {
 
                 item.transcript = transcript
                 item.status = .processing
-                currentStep = "Classifying..."
+                currentStep = "Scanning vault..."
 
-                // get vault URL
+                // [2] PRE-LLM: scan vault, build index, pre-filter, folder tree
                 guard let vaultURL = vaultBookmark.loadBookmarkURL() else {
                     throw NSError(domain: "ProcessingPipeline", code: 1, userInfo: [NSLocalizedDescriptionKey: "No vault URL available"])
                 }
 
-                // scan vault — await actual completion (no 800ms guessing)
                 await vaultScanner.scanAsync(vaultURL: vaultURL)
 
                 let fileList = vaultScanner.fileList()
-                let systemPrompt = PromptBuilder.buildSystemPrompt(fileList: fileList)
+                let fileIndex = vaultScanner.fileIndex
+                let candidates = VaultPreFilter.filter(transcript: transcript, index: fileIndex)
+                let folderTree = FolderTreeBuilder.buildTree(folders: vaultScanner.folders)
+
+                // V2 prompt — candidates may be empty for new vaults (LLM uses new_path)
+                let systemPrompt = PromptBuilder.buildSystemPrompt(candidates: candidates, folderTree: folderTree)
                 let userPrompt = PromptBuilder.buildUserPrompt(transcript: transcript)
-                // apply chat template for instruction-tuned models
                 let combinedPrompt = PromptBuilder.formatChatPrompt(systemPrompt: systemPrompt, userPrompt: userPrompt)
 
                 // load model if needed
@@ -76,55 +79,113 @@ class ProcessingPipeline {
                 currentStep = "Classifying..."
                 let response = try await llmService.generate(prompt: combinedPrompt, grammar: LLMService.defaultGrammarJSON)
 
+                // [3] POST-LLM: parse, resolve IDs, dedup, route, write
                 currentStep = "Writing to vault..."
                 let parsedItems = ResponseParser.parse(jsonString: response)
 
                 let sourceID = item.id
+                var recentEntries: [RecentEntry] = []
 
                 for parsed in parsedItems {
-                    let routed = VaultRouter.route(suggestedFile: parsed.file, availableFiles: fileList)
-                    let dt = parseDateString(parsed.datetime)
                     let contentType = ContentType(rawValue: parsed.type) ?? .note
+                    let hash = MultiWritableItem.computeHash(text: parsed.text, type: contentType)
 
-                    let writable = WritableItem(
+                    // dedup check
+                    if isDuplicate(contentHash: hash, sourceRecordingID: sourceID, context: context) {
+                        print("Skipping duplicate item: \(parsed.text)")
+                        continue
+                    }
+
+                    let dt = parseDateString(parsed.datetime)
+
+                    // resolve file IDs to paths (0-indexed: f0 = candidates[0])
+                    var resolvedFiles: [String] = []
+                    for fileId in parsed.files {
+                        if fileId.hasPrefix("f"), let idx = Int(String(fileId.dropFirst())) {
+                            if idx >= 0 && idx < candidates.count {
+                                resolvedFiles.append(candidates[idx].relativePath)
+                            } else {
+                                print("Error: invalid file ID '\(fileId)' (out of range) — skipping")
+                            }
+                        } else {
+                            // direct path from fallback parser (e.g. "tasks/unprocessed.md")
+                            resolvedFiles.append(fileId)
+                        }
+                    }
+
+                    // add new_path if provided
+                    if let newPath = parsed.newPath {
+                        resolvedFiles.append(newPath)
+                    }
+
+                    // safety: if nothing resolved, fall back to unprocessed
+                    if resolvedFiles.isEmpty {
+                        resolvedFiles = ["tasks/unprocessed.md"]
+                    }
+
+                    // route through VaultRouter for validation + dedup
+                    let targets = VaultRouter.routeMultiple(suggestedFiles: resolvedFiles, availableFiles: fileList)
+
+                    let writable = MultiWritableItem(
                         type: contentType,
                         text: parsed.text,
-                        targetFile: routed.file,
+                        targets: targets,
                         datetime: dt,
-                        isNewFile: routed.isNew
+                        contentHash: hash
                     )
 
-                    try VaultWriter.write(item: writable, vaultURL: vaultURL)
+                    let writtenFiles = try VaultWriter.writeMulti(item: writable, vaultURL: vaultURL)
 
-                    // EventKit — create native action if flagged and has datetime
+                    // EventKit — non-blocking, only for reminder/event with datetime
                     var didCreateNativeAction = false
                     if parsed.nativeAction && dt == nil {
-                        print("Error: nativeAction=true for '\(parsed.text)' but datetime could not be parsed — skipping EventKit")
+                        print("Error: nativeAction=true for '\(parsed.text)' but datetime unparseable — skipping EventKit")
                     }
-                    if parsed.nativeAction, dt != nil {
+                    if parsed.nativeAction, let eventDate = dt {
                         switch contentType {
                         case .reminder:
-                            didCreateNativeAction = await eventKitService.createReminder(title: parsed.text, dueDate: dt)
+                            didCreateNativeAction = await eventKitService.createReminder(title: parsed.text, dueDate: eventDate)
                         case .event:
-                            didCreateNativeAction = await eventKitService.createEvent(title: parsed.text, startDate: dt)
+                            didCreateNativeAction = await eventKitService.createEvent(title: parsed.text, startDate: eventDate)
                         default:
                             break
                         }
                     }
 
+                    let anyNew = targets.contains { $0.isNew }
+
                     let vaultItem = VaultItem(
                         type: contentType,
                         text: parsed.text,
-                        targetFile: routed.file,
-                        wasNewFile: routed.isNew,
+                        targetFiles: writtenFiles,
+                        wasNewFile: anyNew,
                         datetime: dt,
                         nativeActionCreated: didCreateNativeAction,
-                        sourceRecordingID: sourceID
+                        sourceRecordingID: sourceID,
+                        contentHash: hash
                     )
                     context.insert(vaultItem)
+
+                    recentEntries.append(RecentEntry(
+                        type: contentType,
+                        text: parsed.text,
+                        targetFiles: writtenFiles,
+                        datetime: dt
+                    ))
+
                     sortedItemCount += 1
                 }
 
+                // [4] RECENT.MD — batch write for this recording (non-fatal)
+                if !recentEntries.isEmpty {
+                    do {
+                        try VaultWriter.appendToRecent(entries: recentEntries, vaultURL: vaultURL)
+                    } catch {
+                        print("Error: recent.md write failed (non-fatal): \(error)")
+                    }
+                }
+
+                // [5] FINALIZE
                 item.status = .done
 
                 do {
@@ -157,6 +218,18 @@ class ProcessingPipeline {
         appState.pendingCount = 0
         isProcessing = false
         currentStep = ""
+    }
+
+    // MARK: - Private
+
+    private func isDuplicate(contentHash: String, sourceRecordingID: UUID, context: ModelContext) -> Bool {
+        let descriptor = FetchDescriptor<VaultItem>(
+            predicate: #Predicate {
+                $0.contentHash == contentHash && $0.sourceRecordingID == sourceRecordingID
+            }
+        )
+        let count = (try? context.fetchCount(descriptor)) ?? 0
+        return count > 0
     }
 
     private func parseDateString(_ str: String?) -> Date? {

@@ -25,3 +25,12 @@ struct VaultFile: Identifiable {
         self.relativePath = relativePath
     }
 }
+
+struct VaultFileIndex {
+    let relativePath: String   // e.g. "Personal/gym.md"
+    let baseName: String       // e.g. "gym"
+    let folder: String         // e.g. "Personal" (or "" for root)
+    let headings: [String]     // h1-h3 extracted from first 4KB
+    let tags: [String]         // #tag words from first 4KB
+    let summary: String        // first non-empty line after frontmatter, max 80 chars
+}
