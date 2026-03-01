@@ -12,7 +12,7 @@ struct RecordingView: View {
 
     var body: some View {
         ZStack {
-            Color(hex: "0A0E1A")
+            Theme.bg
                 .ignoresSafeArea()
 
             VStack(spacing: 48) {
@@ -22,14 +22,20 @@ struct RecordingView: View {
                 ZStack {
                     // glow ring
                     Circle()
-                        .fill(Color(hex: "3B82F6").opacity(0.15))
+                        .fill(Theme.accent.opacity(0.15))
                         .frame(width: pulseAnimation ? 280 : 240, height: pulseAnimation ? 280 : 240)
                         .animation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true), value: pulseAnimation)
 
                     Circle()
-                        .fill(Color(hex: "3B82F6").opacity(0.08))
+                        .fill(Theme.accent.opacity(0.08))
                         .frame(width: pulseAnimation ? 320 : 260, height: pulseAnimation ? 320 : 260)
                         .animation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true).delay(0.2), value: pulseAnimation)
+
+                    // outer glow ring
+                    Circle()
+                        .fill(Theme.accent.opacity(0.04))
+                        .frame(width: pulseAnimation ? 360 : 300, height: pulseAnimation ? 360 : 300)
+                        .animation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true).delay(0.4), value: pulseAnimation)
 
                     // waveform bars inside circle
                     HStack(alignment: .center, spacing: 3) {
@@ -48,7 +54,7 @@ struct RecordingView: View {
                 // duration
                 Text(formattedDuration)
                     .font(.system(size: 48, weight: .thin, design: .monospaced))
-                    .foregroundColor(Color(hex: "F1F5F9"))
+                    .foregroundColor(Theme.textPrimary)
 
                 // stop button
                 Button {
@@ -71,7 +77,7 @@ struct RecordingView: View {
 
                 Text("Tap to stop recording")
                     .font(.footnote)
-                    .foregroundColor(Color(hex: "94A3B8"))
+                    .foregroundColor(Theme.textSecondary)
 
                 Spacer()
             }
@@ -80,15 +86,24 @@ struct RecordingView: View {
 
     private func waveBar(idx: Int) -> some View {
         let amplitude = audioService.currentAmplitude
-        // give each bar a slightly different height based on amplitude + position
+        // dual-harmonic noise for organic waveform
         let phase = Float(idx) / Float(barCount)
-        let noise = abs(sin(phase * 12.0 + amplitude * 8.0))
-        let height = max(4, CGFloat(amplitude * noise) * 60 + 4)
+        let noise = abs(sin(phase * .pi * 3 + amplitude * 10))
+        let secondary = abs(cos(phase * .pi * 5 + amplitude * 6)) * 0.3
+        let combined = min(1, noise + secondary)
+        let height = max(4, CGFloat(amplitude * combined) * 70 + 4)
 
-        return RoundedRectangle(cornerRadius: 2)
-            .fill(Color(hex: "3B82F6"))
+        return RoundedRectangle(cornerRadius: 2.5)
+            .fill(
+                LinearGradient(
+                    colors: [Theme.accent, Theme.accentGlow],
+                    startPoint: .bottom,
+                    endPoint: .top
+                )
+            )
             .frame(width: 4, height: height)
-            .animation(.easeInOut(duration: 0.08), value: audioService.currentAmplitude)
+            .shadow(color: Theme.glowShadow, radius: CGFloat(amplitude) * 4, y: 0)
+            .animation(.easeInOut(duration: 0.06), value: audioService.currentAmplitude)
     }
 
     private var formattedDuration: String {
@@ -99,6 +114,7 @@ struct RecordingView: View {
     }
 
     private func stopAndSave() {
+        Theme.Haptic.medium()
         if let url = audioService.stopRecording() {
             let filename = url.lastPathComponent
             let item = RecordingQueueItem(audioFileName: filename)

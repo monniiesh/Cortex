@@ -17,8 +17,10 @@ class AppState {
     var lastBannerMessage: String?
     var showBanner = false
 
-    // onboarding
-    var hasCompletedOnboarding = false
+    // onboarding (persisted via UserDefaults)
+    var hasCompletedOnboarding = UserDefaults.standard.bool(forKey: "hasCompletedOnboarding") {
+        didSet { UserDefaults.standard.set(hasCompletedOnboarding, forKey: "hasCompletedOnboarding") }
+    }
 
     // tab bar
     var selectedTab = 0

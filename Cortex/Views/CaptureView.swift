@@ -4,6 +4,8 @@ struct CaptureView: View {
     @Environment(AppState.self) private var appState
     @Environment(AudioRecordingService.self) private var audioService
 
+    @State private var breathe = false
+
     var body: some View {
         ZStack {
             Theme.bg.ignoresSafeArea()
@@ -29,6 +31,12 @@ struct CaptureView: View {
                     startRecording()
                 } label: {
                     ZStack {
+                        // breathing glow
+                        Circle()
+                            .fill(Theme.accent.opacity(0.1))
+                            .frame(width: breathe ? 140 : 124, height: breathe ? 140 : 124)
+                            .animation(.easeInOut(duration: 2.0).repeatForever(autoreverses: true), value: breathe)
+
                         Circle()
                             .fill(Theme.card)
                             .frame(width: 120, height: 120)
@@ -51,9 +59,11 @@ struct CaptureView: View {
                 Spacer()
             }
         }
+        .onAppear { breathe = true }
     }
 
     private func startRecording() {
+        Theme.Haptic.heavy()
         audioService.startRecording()
         appState.isRecording = true
         appState.showRecordingUI = true

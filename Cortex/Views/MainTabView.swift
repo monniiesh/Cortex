@@ -18,9 +18,22 @@ struct MainTabView: View {
                     Label("Capture", systemImage: "mic.fill")
                 }
                 .tag(1)
+
+            SearchView()
+                .tabItem {
+                    Label("Search", systemImage: "magnifyingglass")
+                }
+                .tag(2)
+
+            SettingsView()
+                .tabItem {
+                    Label("Settings", systemImage: "gearshape.fill")
+                }
+                .tag(3)
         }
         .tint(Theme.accent)
         .toolbarBackground(Theme.card, for: .tabBar)
         .toolbarBackground(.visible, for: .tabBar)
+        .onChange(of: appState.selectedTab) { _, _ in Theme.Haptic.selection() }
     }
 }

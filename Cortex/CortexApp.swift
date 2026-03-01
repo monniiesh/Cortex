@@ -35,6 +35,7 @@ struct CortexApp: App {
                 .environment(vaultScanner)
                 .environment(processingPipeline)
                 .environment(eventKitService)
+                .environment(llmService)
                 .onOpenURL { url in
                     // Action Button configured to open cortex://record
                     if url.scheme == "cortex" && url.host == "record" {

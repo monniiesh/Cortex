@@ -87,6 +87,7 @@ struct ContentSection: View {
 
             ForEach(items) { item in
                 ItemCard(item: item, relativePath: relativePath)
+                    .transition(.opacity.combined(with: .move(edge: .bottom)))
             }
         }
     }
@@ -139,6 +140,7 @@ struct ItemCard: View {
     }
 
     private func toggleCheckbox() {
+        Theme.Haptic.light()
         let newState = !item.isCompleted
         item.isCompleted = newState
 

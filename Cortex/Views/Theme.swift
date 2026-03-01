@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 extension Color {
     init(hex: String) {
@@ -36,6 +37,7 @@ enum Theme {
     static let accent = Color(hex: "3B82F6")
     static let accentGlow = Color(hex: "60A5FA")
     static let success = Color(hex: "0EA5E9")
+    static let warning = Color(hex: "F59E0B")
 
     // text
     static let textPrimary = Color(hex: "F1F5F9")
@@ -43,6 +45,15 @@ enum Theme {
 
     // borders
     static let divider = Color(hex: "1E293B")
+    static let searchField = Color(hex: "1E293B")
+
+    // glass
+    static let glassBackground = Color(hex: "111827").opacity(0.85)
+    static let glassBorder = Color.white.opacity(0.08)
+
+    // shadows
+    static let cardShadow = Color.black.opacity(0.25)
+    static let glowShadow = Color(hex: "3B82F6").opacity(0.3)
 
     // radii
     static let folderRadius: CGFloat = 16
@@ -50,4 +61,25 @@ enum Theme {
 
     // animation
     static let spring = Animation.spring(response: 0.35)
+    static let springBouncy = Animation.spring(response: 0.4, dampingFraction: 0.7)
+    static let springSnappy = Animation.spring(response: 0.25, dampingFraction: 0.85)
+    static let fadeIn = Animation.easeOut(duration: 0.25)
+
+    enum Haptic {
+        static func light() {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        }
+        static func medium() {
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        }
+        static func heavy() {
+            UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+        }
+        static func success() {
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
+        }
+        static func selection() {
+            UISelectionFeedbackGenerator().selectionChanged()
+        }
+    }
 }

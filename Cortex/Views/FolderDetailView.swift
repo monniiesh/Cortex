@@ -16,6 +16,7 @@ struct FolderDetailView: View {
                     NavigationLink(value: file.relativePath) {
                         FileRow(file: file, itemCount: itemCounts[file.relativePath] ?? 0)
                     }
+                    .simultaneousGesture(TapGesture().onEnded { Theme.Haptic.selection() })
                     .listRowBackground(Theme.card)
                 }
             }

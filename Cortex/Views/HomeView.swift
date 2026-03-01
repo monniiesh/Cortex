@@ -16,7 +16,7 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(hex: "0A0E1A").ignoresSafeArea()
+                Theme.bg.ignoresSafeArea()
 
                 ScrollView {
                     VStack(spacing: 16) {
@@ -26,11 +26,14 @@ struct HomeView: View {
                         }
 
                         LazyVGrid(columns: columns, spacing: 16) {
-                            ForEach(vaultScanner.folders) { folder in
+                            ForEach(Array(vaultScanner.folders.enumerated()), id: \.element.path) { idx, folder in
                                 NavigationLink(value: FolderNav(path: folder.path)) {
                                     FolderCard(folder: folder)
                                 }
                                 .buttonStyle(.plain)
+                                .opacity(hasScanned ? 1 : 0)
+                                .offset(y: hasScanned ? 0 : 20)
+                                .animation(Theme.spring.delay(Double(idx) * 0.05), value: hasScanned)
                             }
                         }
                     }
@@ -56,18 +59,18 @@ struct HomeView: View {
     private var queueBanner: some View {
         HStack(spacing: 10) {
             Image(systemName: "waveform")
-                .foregroundColor(Color(hex: "3B82F6"))
+                .foregroundColor(Theme.accent)
             Text("\(appState.pendingCount) recording\(appState.pendingCount == 1 ? "" : "s") pending")
                 .font(.subheadline)
-                .foregroundColor(Color(hex: "94A3B8"))
+                .foregroundColor(Theme.textSecondary)
             Spacer()
         }
         .padding(12)
-        .background(Color(hex: "111827"))
+        .background(Theme.card)
         .cornerRadius(12)
         .overlay(
             RoundedRectangle(cornerRadius: 12)
-                .stroke(Color(hex: "1E293B"), lineWidth: 1)
+                .stroke(Theme.divider, lineWidth: 1)
         )
     }
 
@@ -87,31 +90,39 @@ struct FolderNav: Hashable {
 struct FolderCard: View {
     let folder: VaultFolder
 
+    @State private var isPressed = false
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Image(systemName: iconName(for: folder.name))
                 .font(.title2)
-                .foregroundColor(Color(hex: "3B82F6"))
+                .foregroundColor(Theme.accent)
 
             Spacer()
 
             Text(folder.name)
                 .font(.headline)
-                .foregroundColor(Color(hex: "F1F5F9"))
+                .foregroundColor(Theme.textPrimary)
                 .lineLimit(1)
 
             Text("\(folder.files.count) file\(folder.files.count == 1 ? "" : "s")")
                 .font(.caption)
-                .foregroundColor(Color(hex: "94A3B8"))
+                .foregroundColor(Theme.textSecondary)
         }
         .padding(16)
         .frame(maxWidth: .infinity, minHeight: 120, alignment: .leading)
-        .background(Color(hex: "111827"))
+        .background(Theme.card)
         .cornerRadius(16)
         .overlay(
             RoundedRectangle(cornerRadius: 16)
-                .stroke(Color(hex: "1E293B"), lineWidth: 1)
+                .stroke(Theme.divider, lineWidth: 1)
         )
+        .shadow(color: Theme.cardShadow, radius: isPressed ? 2 : 6, y: isPressed ? 1 : 3)
+        .scaleEffect(isPressed ? 0.96 : 1.0)
+        .animation(Theme.springSnappy, value: isPressed)
+        .onLongPressGesture(minimumDuration: 0, pressing: { pressing in
+            isPressed = pressing
+        }, perform: {})
     }
 
     // pick a SF symbol based on folder name — falls back to generic folder
