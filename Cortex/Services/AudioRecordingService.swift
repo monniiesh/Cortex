@@ -8,6 +8,7 @@ class AudioRecordingService {
     var currentAmplitude: Float = 0
     var recordingDuration: TimeInterval = 0
     var audioRecorder: AVAudioRecorder?
+    var micPermissionGranted = false
 
     private var meteringTimer: Timer?
     private var currentFileURL: URL?
@@ -15,12 +16,15 @@ class AudioRecordingService {
     func setupAudioSession() {
         let session = AVAudioSession.sharedInstance()
         do {
-            try session.setCategory(.playAndRecord, mode: .default)
+            try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
             try session.setActive(true)
         } catch {
             print("Error: failed to configure audio session: \(error)")
         }
-        requestMicrophonePermission { granted in
+        requestMicrophonePermission { [weak self] granted in
+            DispatchQueue.main.async {
+                self?.micPermissionGranted = granted
+            }
             if !granted {
                 print("Error: microphone permission denied")
             }
@@ -28,6 +32,11 @@ class AudioRecordingService {
     }
 
     func startRecording() {
+        guard micPermissionGranted else {
+            print("Error: microphone permission not yet granted")
+            return
+        }
+
         let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd_HHmmss"

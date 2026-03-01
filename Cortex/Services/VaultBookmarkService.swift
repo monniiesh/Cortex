@@ -20,7 +20,7 @@ class VaultBookmarkService {
 
         do {
             let bookmark = try url.bookmarkData(
-                options: .minimalBookmark,
+                options: [],
                 includingResourceValuesForKeys: nil,
                 relativeTo: nil
             )
@@ -31,6 +31,9 @@ class VaultBookmarkService {
     }
 
     func loadBookmarkURL() -> URL? {
+        // already resolved
+        if let vaultURL { return vaultURL }
+
         guard let data = UserDefaults.standard.data(forKey: bookmarkKey) else { return nil }
         var isStale = false
         do {
@@ -40,10 +43,26 @@ class VaultBookmarkService {
                 relativeTo: nil,
                 bookmarkDataIsStale: &isStale
             )
-            if isStale {
-                saveBookmark(for: url)
+
+            guard url.startAccessingSecurityScopedResource() else {
+                print("Error: failed to start security-scoped access for vault URL")
+                return nil
             }
-            _ = url.startAccessingSecurityScopedResource()
+
+            if isStale {
+                // re-save while access is active (don't go through saveBookmark which does its own start/stop)
+                do {
+                    let freshBookmark = try url.bookmarkData(
+                        options: [],
+                        includingResourceValuesForKeys: nil,
+                        relativeTo: nil
+                    )
+                    UserDefaults.standard.set(freshBookmark, forKey: bookmarkKey)
+                } catch {
+                    print("Error: failed to refresh stale bookmark: \(error)")
+                }
+            }
+
             vaultURL = url
             return url
         } catch {

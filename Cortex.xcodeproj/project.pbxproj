@@ -35,8 +35,10 @@
 		A15200713CA84E2E1CE377A6 /* AudioRecordingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingService.swift; sourceTree = "<group>"; };
 		A8AB59DE31F1BFE04B990918 /* CortexApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CortexApp.swift; sourceTree = "<group>"; };
 		ACFB17265C00DC69408261AF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		C20F64FCBE4A44C13D917A4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C8E4B4F2B6A305A84AFE806E /* RecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingView.swift; sourceTree = "<group>"; };
 		D93D93605BB32716D91832B6 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		E52A207B63EDD3AA005DFF0D /* Cortex.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cortex.entitlements; sourceTree = "<group>"; };
 		EBE2232138D8CEDD4341B7CB /* Cortex.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Cortex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F20AFB7B3C7F0EA396F20054 /* RecordingQueueItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingQueueItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -47,7 +49,9 @@
 			children = (
 				D93D93605BB32716D91832B6 /* AppState.swift */,
 				50A50C1F110A931D936F902B /* Assets.xcassets */,
+				E52A207B63EDD3AA005DFF0D /* Cortex.entitlements */,
 				A8AB59DE31F1BFE04B990918 /* CortexApp.swift */,
+				C20F64FCBE4A44C13D917A4F /* Info.plist */,
 				98B859AD4417ED86E7B32FEE /* Models */,
 				3648C5A16A3C6EDA7A2B056E /* Services */,
 				2C260250B223BA4AB274EF5E /* Views */,
@@ -266,7 +270,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = Cortex/Cortex.entitlements;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -285,7 +288,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = Cortex/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -334,7 +336,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = Cortex/Cortex.entitlements;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -347,7 +348,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = Cortex/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;

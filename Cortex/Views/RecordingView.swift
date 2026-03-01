@@ -103,6 +103,7 @@ struct RecordingView: View {
             let filename = url.lastPathComponent
             let item = RecordingQueueItem(audioFileName: filename)
             modelContext.insert(item)
+            try? modelContext.save()
         }
         appState.isRecording = false
         appState.showRecordingUI = false

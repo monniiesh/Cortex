@@ -25,8 +25,11 @@ struct ContentView: View {
             VaultPickerView()
         }
         .onChange(of: appState.launchedFromActionButton) { _, triggered in
-            if triggered && appState.isVaultConnected {
+            if triggered && appState.isVaultConnected && audioService.micPermissionGranted {
                 startRecording()
+                appState.launchedFromActionButton = false
+            } else if triggered {
+                // reset flag if we can't record (no vault or no mic permission)
                 appState.launchedFromActionButton = false
             }
         }
@@ -104,6 +107,7 @@ struct ContentView: View {
                         .foregroundColor(Color(hex: "3B82F6"))
                 }
             }
+            .disabled(!audioService.micPermissionGranted)
 
             Text("Press Action Button or tap to record")
                 .font(.footnote)
@@ -121,7 +125,6 @@ struct ContentView: View {
     }
 
     private func startRecording() {
-        audioService.setupAudioSession()
         audioService.startRecording()
         appState.isRecording = true
         appState.showRecordingUI = true

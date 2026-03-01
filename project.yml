@@ -10,8 +10,6 @@ settings:
   base:
     SWIFT_VERSION: "6.0"
     TARGETED_DEVICE_FAMILY: "1"
-    INFOPLIST_FILE: Cortex/Info.plist
-    CODE_SIGN_ENTITLEMENTS: Cortex/Cortex.entitlements
     ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
     ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
 
@@ -20,10 +18,7 @@ targets:
     type: application
     platform: iOS
     sources:
-      - path: Cortex
-        excludes:
-          - "*.entitlements"
-          - "Info.plist"
+      - Cortex
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.moni.cortex
@@ -32,7 +27,23 @@ targets:
         CURRENT_PROJECT_VERSION: "1"
         SWIFT_EMIT_LOC_STRINGS: "YES"
         ENABLE_PREVIEWS: "YES"
-    entitlements:
-      path: Cortex/Cortex.entitlements
+        CODE_SIGN_ENTITLEMENTS: Cortex/Cortex.entitlements
     info:
       path: Cortex/Info.plist
+      properties:
+        NSMicrophoneUsageDescription: "Cortex needs microphone access to record voice notes for transcription and sorting."
+        NSSpeechRecognitionUsageDescription: "Cortex uses on-device speech recognition to transcribe your voice recordings."
+        NSCalendarsFullAccessUsageDescription: "Cortex creates calendar events from your voice notes when appointments are detected."
+        NSRemindersFullAccessUsageDescription: "Cortex creates reminders from your voice notes when time-bound tasks are detected."
+        UIBackgroundModes:
+          - audio
+          - processing
+          - fetch
+        BGTaskSchedulerPermittedIdentifiers:
+          - com.moni.cortex.processing
+          - com.moni.cortex.refresh
+        CFBundleURLTypes:
+          - CFBundleURLName: com.moni.cortex
+            CFBundleURLSchemes:
+              - cortex
+        UILaunchStoryboardName: ""
