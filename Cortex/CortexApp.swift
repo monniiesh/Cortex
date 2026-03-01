@@ -11,6 +11,7 @@ struct CortexApp: App {
     @State private var transcriptionService = TranscriptionService()
     @State private var llmService = LLMService()
     @State private var processingPipeline = ProcessingPipeline()
+    @State private var eventKitService = EventKitService()
     @Environment(\.scenePhase) private var scenePhase
 
     let modelContainer: ModelContainer
@@ -33,6 +34,7 @@ struct CortexApp: App {
                 .environment(vaultBookmarkService)
                 .environment(vaultScanner)
                 .environment(processingPipeline)
+                .environment(eventKitService)
                 .onOpenURL { url in
                     // Action Button configured to open cortex://record
                     if url.scheme == "cortex" && url.host == "record" {
@@ -93,7 +95,8 @@ struct CortexApp: App {
                 vaultScanner: vaultScanner,
                 transcriptionService: transcriptionService,
                 llmService: llmService,
-                appState: appState
+                appState: appState,
+                eventKitService: eventKitService
             )
         }
 
@@ -105,7 +108,8 @@ struct CortexApp: App {
                 vaultScanner: vaultScanner,
                 transcriptionService: transcriptionService,
                 llmService: llmService,
-                appState: appState
+                appState: appState,
+                eventKitService: eventKitService
             )
         }
     }

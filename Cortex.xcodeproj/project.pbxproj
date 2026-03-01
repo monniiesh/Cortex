@@ -23,6 +23,7 @@
 		B0892484D383B7294EA33111 /* VaultItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E19BA10E5F22C0F4460BF1 /* VaultItem.swift */; };
 		B0ED8F6727AC26E30EA6B68B /* VaultRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D975EFD7BD97AA8EE476304F /* VaultRouter.swift */; };
 		B4ACEFF94B71D28563F91F90 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93D93605BB32716D91832B6 /* AppState.swift */; };
+		C3A6806CD33C5C2836B9B1E9 /* EventKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7459717883FA8FD620960E21 /* EventKitService.swift */; };
 		C559D061B59577D07AEF6DBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50A50C1F110A931D936F902B /* Assets.xcassets */; };
 		C77388BB6A9A2132E4A3042F /* VaultBookmarkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E03242B52E3B3B6ED06710B /* VaultBookmarkService.swift */; };
 		D33C458419F21D919F88E3B0 /* PromptBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9F884075141593E807A6BD /* PromptBuilder.swift */; };
@@ -40,6 +41,7 @@
 		50A50C1F110A931D936F902B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		57E19BA10E5F22C0F4460BF1 /* VaultItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultItem.swift; sourceTree = "<group>"; };
 		617ACE46A1E99C7C5DAD48C8 /* VaultWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultWriter.swift; sourceTree = "<group>"; };
+		7459717883FA8FD620960E21 /* EventKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventKitService.swift; sourceTree = "<group>"; };
 		8BE989A6F4AF4A89F163EDAA /* VaultStructures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultStructures.swift; sourceTree = "<group>"; };
 		90CFA8C9F658BF1D9027F5E7 /* VaultScannerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultScannerService.swift; sourceTree = "<group>"; };
 		A15200713CA84E2E1CE377A6 /* AudioRecordingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingService.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 			children = (
 				A15200713CA84E2E1CE377A6 /* AudioRecordingService.swift */,
 				13B3BE4B17D4B25BEFF88B35 /* BackgroundTaskService.swift */,
+				7459717883FA8FD620960E21 /* EventKitService.swift */,
 				A489CAE659115D2E907CA606 /* LLMService.swift */,
 				F53A48943D3511EDDA1943D3 /* ProcessingPipeline.swift */,
 				BF9F884075141593E807A6BD /* PromptBuilder.swift */,
@@ -170,7 +173,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1600;
+				LastUpgradeCheck = 2600;
 			};
 			buildConfigurationList = 33A871C4EF2489848C657C68 /* Build configuration list for PBXProject "Cortex" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -216,6 +219,7 @@
 				06DB1241BDCAE863C06B86D2 /* ContentType.swift in Sources */,
 				1BE1F1BD5CAFF5EC1BDB1A08 /* ContentView.swift in Sources */,
 				1A8CFB01C9CEDFB1C044B0B8 /* CortexApp.swift in Sources */,
+				C3A6806CD33C5C2836B9B1E9 /* EventKitService.swift in Sources */,
 				31D0E4ED1BA5D2DAD7373CD8 /* LLMService.swift in Sources */,
 				06D16123C752D5401983D229 /* ProcessingPipeline.swift in Sources */,
 				D33C458419F21D919F88E3B0 /* PromptBuilder.swift in Sources */,
@@ -333,7 +337,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -393,7 +397,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";

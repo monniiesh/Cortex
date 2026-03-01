@@ -15,7 +15,8 @@ class ProcessingPipeline {
         vaultScanner: VaultScannerService,
         transcriptionService: TranscriptionService,
         llmService: LLMService,
-        appState: AppState
+        appState: AppState,
+        eventKitService: EventKitService
     ) async {
         let descriptor = FetchDescriptor<RecordingQueueItem>(
             predicate: #Predicate { $0.statusRaw == "pending" }
@@ -95,13 +96,26 @@ class ProcessingPipeline {
 
                     try VaultWriter.write(item: writable, vaultURL: vaultURL)
 
+                    // EventKit — create native action if flagged and has datetime
+                    var didCreateNativeAction = false
+                    if parsed.nativeAction, dt != nil {
+                        switch contentType {
+                        case .reminder:
+                            didCreateNativeAction = await eventKitService.createReminder(title: parsed.text, dueDate: dt)
+                        case .event:
+                            didCreateNativeAction = await eventKitService.createEvent(title: parsed.text, startDate: dt)
+                        default:
+                            break
+                        }
+                    }
+
                     let vaultItem = VaultItem(
                         type: contentType,
                         text: parsed.text,
                         targetFile: routed.file,
                         wasNewFile: routed.isNew,
                         datetime: dt,
-                        nativeActionCreated: parsed.nativeAction,
+                        nativeActionCreated: didCreateNativeAction,
                         sourceRecordingID: sourceID
                     )
                     context.insert(vaultItem)
@@ -152,8 +166,11 @@ class ProcessingPipeline {
         if let d = iso.date(from: str) { return d }
         // spec format has no timezone: "2026-03-01T09:00:00"
         let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         df.locale = Locale(identifier: "en_US_POSIX")
+        df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        if let d = df.date(from: str) { return d }
+        // date-only fallback (returns midnight)
+        df.dateFormat = "yyyy-MM-dd"
         return df.date(from: str)
     }
 }
