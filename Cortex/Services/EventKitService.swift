@@ -50,7 +50,16 @@ class EventKitService {
 
         let newList = EKCalendar(for: .reminder, eventStore: eventStore)
         newList.title = "Cortex"
-        newList.source = eventStore.defaultCalendarForNewReminders()?.source
+        // try default source, fall back to local, then any available
+        let source = eventStore.defaultCalendarForNewReminders()?.source
+            ?? eventStore.sources.first(where: { $0.sourceType == .local })
+            ?? eventStore.sources.first
+
+        guard let resolvedSource = source else {
+            print("Error: no reminders source available on this device")
+            return nil
+        }
+        newList.source = resolvedSource
 
         do {
             try eventStore.saveCalendar(newList, commit: true)
@@ -81,8 +90,11 @@ class EventKitService {
         reminder.calendar = list
 
         if let due = dueDate {
-            let cal = Calendar.current
-            reminder.dueDateComponents = cal.dateComponents([.year, .month, .day, .hour, .minute], from: due)
+            reminder.timeZone = TimeZone.current
+            reminder.dueDateComponents = Calendar.current.dateComponents(
+                [.year, .month, .day, .hour, .minute, .timeZone], from: due
+            )
+            reminder.addAlarm(EKAlarm(absoluteDate: due))
         }
 
         do {
@@ -103,11 +115,16 @@ class EventKitService {
             }
         }
 
+        guard let defaultCal = eventStore.defaultCalendarForNewEvents else {
+            print("Error: no writable default calendar available")
+            return false
+        }
+
         let event = EKEvent(eventStore: eventStore)
         event.title = title
         event.startDate = startDate ?? Date()
         event.endDate = event.startDate.addingTimeInterval(3600)
-        event.calendar = eventStore.defaultCalendarForNewEvents
+        event.calendar = defaultCal
 
         do {
             try eventStore.save(event, span: .thisEvent)

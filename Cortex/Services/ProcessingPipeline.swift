@@ -98,6 +98,9 @@ class ProcessingPipeline {
 
                     // EventKit — create native action if flagged and has datetime
                     var didCreateNativeAction = false
+                    if parsed.nativeAction && dt == nil {
+                        print("Error: nativeAction=true for '\(parsed.text)' but datetime could not be parsed — skipping EventKit")
+                    }
                     if parsed.nativeAction, dt != nil {
                         switch contentType {
                         case .reminder:
