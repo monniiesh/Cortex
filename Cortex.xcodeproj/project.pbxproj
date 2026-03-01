@@ -1,0 +1,387 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		06DB1241BDCAE863C06B86D2 /* ContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C6B91A16A11ED9552C48CB /* ContentType.swift */; };
+		1A8CFB01C9CEDFB1C044B0B8 /* CortexApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AB59DE31F1BFE04B990918 /* CortexApp.swift */; };
+		1BE1F1BD5CAFF5EC1BDB1A08 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFB17265C00DC69408261AF /* ContentView.swift */; };
+		2011953629C7A9D326E9FFBE /* VaultScannerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CFA8C9F658BF1D9027F5E7 /* VaultScannerService.swift */; };
+		2B1FAFFEB4BD0081F3A770F6 /* RecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E4B4F2B6A305A84AFE806E /* RecordingView.swift */; };
+		51AFAD638785FCEDA8CA1B29 /* AudioRecordingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15200713CA84E2E1CE377A6 /* AudioRecordingService.swift */; };
+		8F0C6A3BF7C887A3566F8F29 /* VaultStructures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE989A6F4AF4A89F163EDAA /* VaultStructures.swift */; };
+		B0892484D383B7294EA33111 /* VaultItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E19BA10E5F22C0F4460BF1 /* VaultItem.swift */; };
+		B4ACEFF94B71D28563F91F90 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93D93605BB32716D91832B6 /* AppState.swift */; };
+		C559D061B59577D07AEF6DBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50A50C1F110A931D936F902B /* Assets.xcassets */; };
+		C77388BB6A9A2132E4A3042F /* VaultBookmarkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E03242B52E3B3B6ED06710B /* VaultBookmarkService.swift */; };
+		D769D059A02F008EF9D3631B /* VaultPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DA8190C670EE603C41970E /* VaultPickerView.swift */; };
+		E7FC53A39E6F9D01E18B6171 /* RecordingQueueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20AFB7B3C7F0EA396F20054 /* RecordingQueueItem.swift */; };
+		F8897C0432331A8F3A846E0A /* BackgroundTaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B3BE4B17D4B25BEFF88B35 /* BackgroundTaskService.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		06C6B91A16A11ED9552C48CB /* ContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentType.swift; sourceTree = "<group>"; };
+		09DA8190C670EE603C41970E /* VaultPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultPickerView.swift; sourceTree = "<group>"; };
+		13B3BE4B17D4B25BEFF88B35 /* BackgroundTaskService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTaskService.swift; sourceTree = "<group>"; };
+		2E03242B52E3B3B6ED06710B /* VaultBookmarkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultBookmarkService.swift; sourceTree = "<group>"; };
+		50A50C1F110A931D936F902B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		57E19BA10E5F22C0F4460BF1 /* VaultItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultItem.swift; sourceTree = "<group>"; };
+		8BE989A6F4AF4A89F163EDAA /* VaultStructures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultStructures.swift; sourceTree = "<group>"; };
+		90CFA8C9F658BF1D9027F5E7 /* VaultScannerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultScannerService.swift; sourceTree = "<group>"; };
+		A15200713CA84E2E1CE377A6 /* AudioRecordingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingService.swift; sourceTree = "<group>"; };
+		A8AB59DE31F1BFE04B990918 /* CortexApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CortexApp.swift; sourceTree = "<group>"; };
+		ACFB17265C00DC69408261AF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		C8E4B4F2B6A305A84AFE806E /* RecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingView.swift; sourceTree = "<group>"; };
+		D93D93605BB32716D91832B6 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		EBE2232138D8CEDD4341B7CB /* Cortex.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Cortex.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F20AFB7B3C7F0EA396F20054 /* RecordingQueueItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingQueueItem.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		232030CC7927E93B11970350 /* Cortex */ = {
+			isa = PBXGroup;
+			children = (
+				D93D93605BB32716D91832B6 /* AppState.swift */,
+				50A50C1F110A931D936F902B /* Assets.xcassets */,
+				A8AB59DE31F1BFE04B990918 /* CortexApp.swift */,
+				98B859AD4417ED86E7B32FEE /* Models */,
+				3648C5A16A3C6EDA7A2B056E /* Services */,
+				2C260250B223BA4AB274EF5E /* Views */,
+			);
+			path = Cortex;
+			sourceTree = "<group>";
+		};
+		2C260250B223BA4AB274EF5E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				ACFB17265C00DC69408261AF /* ContentView.swift */,
+				C8E4B4F2B6A305A84AFE806E /* RecordingView.swift */,
+				09DA8190C670EE603C41970E /* VaultPickerView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3648C5A16A3C6EDA7A2B056E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A15200713CA84E2E1CE377A6 /* AudioRecordingService.swift */,
+				13B3BE4B17D4B25BEFF88B35 /* BackgroundTaskService.swift */,
+				2E03242B52E3B3B6ED06710B /* VaultBookmarkService.swift */,
+				90CFA8C9F658BF1D9027F5E7 /* VaultScannerService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		7169FCF54D40FEFB36F9C42D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EBE2232138D8CEDD4341B7CB /* Cortex.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		98B859AD4417ED86E7B32FEE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				06C6B91A16A11ED9552C48CB /* ContentType.swift */,
+				F20AFB7B3C7F0EA396F20054 /* RecordingQueueItem.swift */,
+				57E19BA10E5F22C0F4460BF1 /* VaultItem.swift */,
+				8BE989A6F4AF4A89F163EDAA /* VaultStructures.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F5F27EF0BE549B59C229504B = {
+			isa = PBXGroup;
+			children = (
+				232030CC7927E93B11970350 /* Cortex */,
+				7169FCF54D40FEFB36F9C42D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DF840D40CF9BDA79A945D6C9 /* Cortex */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3D25E99CB30C1A51A41D4704 /* Build configuration list for PBXNativeTarget "Cortex" */;
+			buildPhases = (
+				6A46890969F51B47635AC3A1 /* Sources */,
+				599C8A95D7097A2089B3E87D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Cortex;
+			packageProductDependencies = (
+			);
+			productName = Cortex;
+			productReference = EBE2232138D8CEDD4341B7CB /* Cortex.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1348F49E45DC225520E6616C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+			};
+			buildConfigurationList = 33A871C4EF2489848C657C68 /* Build configuration list for PBXProject "Cortex" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = F5F27EF0BE549B59C229504B;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DF840D40CF9BDA79A945D6C9 /* Cortex */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		599C8A95D7097A2089B3E87D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C559D061B59577D07AEF6DBF /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6A46890969F51B47635AC3A1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B4ACEFF94B71D28563F91F90 /* AppState.swift in Sources */,
+				51AFAD638785FCEDA8CA1B29 /* AudioRecordingService.swift in Sources */,
+				F8897C0432331A8F3A846E0A /* BackgroundTaskService.swift in Sources */,
+				06DB1241BDCAE863C06B86D2 /* ContentType.swift in Sources */,
+				1BE1F1BD5CAFF5EC1BDB1A08 /* ContentView.swift in Sources */,
+				1A8CFB01C9CEDFB1C044B0B8 /* CortexApp.swift in Sources */,
+				E7FC53A39E6F9D01E18B6171 /* RecordingQueueItem.swift in Sources */,
+				2B1FAFFEB4BD0081F3A770F6 /* RecordingView.swift in Sources */,
+				C77388BB6A9A2132E4A3042F /* VaultBookmarkService.swift in Sources */,
+				B0892484D383B7294EA33111 /* VaultItem.swift in Sources */,
+				D769D059A02F008EF9D3631B /* VaultPickerView.swift in Sources */,
+				2011953629C7A9D326E9FFBE /* VaultScannerService.swift in Sources */,
+				8F0C6A3BF7C887A3566F8F29 /* VaultStructures.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		761469CCDFF7713310829A98 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Cortex/Cortex.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Cortex/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.moni.cortex;
+				PRODUCT_NAME = Cortex;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A7CD0CEAC2E8577CA19B1203 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Cortex/Cortex.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Cortex/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.moni.cortex;
+				PRODUCT_NAME = Cortex;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C2B9BC2BD27569B1D0EAED0D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = Cortex/Cortex.entitlements;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Cortex/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		E69E54B57D10D1B1D99E508C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = Cortex/Cortex.entitlements;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Cortex/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		33A871C4EF2489848C657C68 /* Build configuration list for PBXProject "Cortex" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C2B9BC2BD27569B1D0EAED0D /* Debug */,
+				E69E54B57D10D1B1D99E508C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		3D25E99CB30C1A51A41D4704 /* Build configuration list for PBXNativeTarget "Cortex" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				761469CCDFF7713310829A98 /* Debug */,
+				A7CD0CEAC2E8577CA19B1203 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1348F49E45DC225520E6616C /* Project object */;
+}
