@@ -7,17 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		06D16123C752D5401983D229 /* ProcessingPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53A48943D3511EDDA1943D3 /* ProcessingPipeline.swift */; };
 		06DB1241BDCAE863C06B86D2 /* ContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C6B91A16A11ED9552C48CB /* ContentType.swift */; };
+		147AED5EDE4C0159CC7345CF /* TranscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E801D912A904C81126D343 /* TranscriptionService.swift */; };
+		17CADD3A174B45455B3F0B1B /* llama in Frameworks */ = {isa = PBXBuildFile; productRef = A66391A5688F78BC4F1B9E64 /* llama */; };
 		1A8CFB01C9CEDFB1C044B0B8 /* CortexApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AB59DE31F1BFE04B990918 /* CortexApp.swift */; };
 		1BE1F1BD5CAFF5EC1BDB1A08 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFB17265C00DC69408261AF /* ContentView.swift */; };
 		2011953629C7A9D326E9FFBE /* VaultScannerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CFA8C9F658BF1D9027F5E7 /* VaultScannerService.swift */; };
+		262C7CFF66FA0D4457E3DB13 /* ResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4A642A8DD1B18CBC079758 /* ResponseParser.swift */; };
 		2B1FAFFEB4BD0081F3A770F6 /* RecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E4B4F2B6A305A84AFE806E /* RecordingView.swift */; };
+		31D0E4ED1BA5D2DAD7373CD8 /* LLMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A489CAE659115D2E907CA606 /* LLMService.swift */; };
 		51AFAD638785FCEDA8CA1B29 /* AudioRecordingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15200713CA84E2E1CE377A6 /* AudioRecordingService.swift */; };
+		8B205768EAAF4311CFAACE19 /* VaultWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617ACE46A1E99C7C5DAD48C8 /* VaultWriter.swift */; };
 		8F0C6A3BF7C887A3566F8F29 /* VaultStructures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE989A6F4AF4A89F163EDAA /* VaultStructures.swift */; };
 		B0892484D383B7294EA33111 /* VaultItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E19BA10E5F22C0F4460BF1 /* VaultItem.swift */; };
+		B0ED8F6727AC26E30EA6B68B /* VaultRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D975EFD7BD97AA8EE476304F /* VaultRouter.swift */; };
 		B4ACEFF94B71D28563F91F90 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93D93605BB32716D91832B6 /* AppState.swift */; };
 		C559D061B59577D07AEF6DBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50A50C1F110A931D936F902B /* Assets.xcassets */; };
 		C77388BB6A9A2132E4A3042F /* VaultBookmarkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E03242B52E3B3B6ED06710B /* VaultBookmarkService.swift */; };
+		D33C458419F21D919F88E3B0 /* PromptBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9F884075141593E807A6BD /* PromptBuilder.swift */; };
 		D769D059A02F008EF9D3631B /* VaultPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DA8190C670EE603C41970E /* VaultPickerView.swift */; };
 		E7FC53A39E6F9D01E18B6171 /* RecordingQueueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20AFB7B3C7F0EA396F20054 /* RecordingQueueItem.swift */; };
 		F8897C0432331A8F3A846E0A /* BackgroundTaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B3BE4B17D4B25BEFF88B35 /* BackgroundTaskService.swift */; };
@@ -28,20 +36,38 @@
 		09DA8190C670EE603C41970E /* VaultPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultPickerView.swift; sourceTree = "<group>"; };
 		13B3BE4B17D4B25BEFF88B35 /* BackgroundTaskService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTaskService.swift; sourceTree = "<group>"; };
 		2E03242B52E3B3B6ED06710B /* VaultBookmarkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultBookmarkService.swift; sourceTree = "<group>"; };
+		41E801D912A904C81126D343 /* TranscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionService.swift; sourceTree = "<group>"; };
 		50A50C1F110A931D936F902B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		57E19BA10E5F22C0F4460BF1 /* VaultItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultItem.swift; sourceTree = "<group>"; };
+		617ACE46A1E99C7C5DAD48C8 /* VaultWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultWriter.swift; sourceTree = "<group>"; };
 		8BE989A6F4AF4A89F163EDAA /* VaultStructures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultStructures.swift; sourceTree = "<group>"; };
 		90CFA8C9F658BF1D9027F5E7 /* VaultScannerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultScannerService.swift; sourceTree = "<group>"; };
 		A15200713CA84E2E1CE377A6 /* AudioRecordingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingService.swift; sourceTree = "<group>"; };
+		A489CAE659115D2E907CA606 /* LLMService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMService.swift; sourceTree = "<group>"; };
 		A8AB59DE31F1BFE04B990918 /* CortexApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CortexApp.swift; sourceTree = "<group>"; };
 		ACFB17265C00DC69408261AF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BF9F884075141593E807A6BD /* PromptBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptBuilder.swift; sourceTree = "<group>"; };
 		C20F64FCBE4A44C13D917A4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C8E4B4F2B6A305A84AFE806E /* RecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingView.swift; sourceTree = "<group>"; };
+		CA4A642A8DD1B18CBC079758 /* ResponseParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseParser.swift; sourceTree = "<group>"; };
 		D93D93605BB32716D91832B6 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		D975EFD7BD97AA8EE476304F /* VaultRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultRouter.swift; sourceTree = "<group>"; };
 		E52A207B63EDD3AA005DFF0D /* Cortex.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cortex.entitlements; sourceTree = "<group>"; };
 		EBE2232138D8CEDD4341B7CB /* Cortex.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Cortex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F20AFB7B3C7F0EA396F20054 /* RecordingQueueItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingQueueItem.swift; sourceTree = "<group>"; };
+		F53A48943D3511EDDA1943D3 /* ProcessingPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessingPipeline.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		110AD0F20570459664FE80BA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17CADD3A174B45455B3F0B1B /* llama in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		232030CC7927E93B11970350 /* Cortex */ = {
@@ -74,8 +100,15 @@
 			children = (
 				A15200713CA84E2E1CE377A6 /* AudioRecordingService.swift */,
 				13B3BE4B17D4B25BEFF88B35 /* BackgroundTaskService.swift */,
+				A489CAE659115D2E907CA606 /* LLMService.swift */,
+				F53A48943D3511EDDA1943D3 /* ProcessingPipeline.swift */,
+				BF9F884075141593E807A6BD /* PromptBuilder.swift */,
+				CA4A642A8DD1B18CBC079758 /* ResponseParser.swift */,
+				41E801D912A904C81126D343 /* TranscriptionService.swift */,
 				2E03242B52E3B3B6ED06710B /* VaultBookmarkService.swift */,
+				D975EFD7BD97AA8EE476304F /* VaultRouter.swift */,
 				90CFA8C9F658BF1D9027F5E7 /* VaultScannerService.swift */,
+				617ACE46A1E99C7C5DAD48C8 /* VaultWriter.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -116,6 +149,7 @@
 			buildPhases = (
 				6A46890969F51B47635AC3A1 /* Sources */,
 				599C8A95D7097A2089B3E87D /* Resources */,
+				110AD0F20570459664FE80BA /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -123,6 +157,7 @@
 			);
 			name = Cortex;
 			packageProductDependencies = (
+				A66391A5688F78BC4F1B9E64 /* llama */,
 			);
 			productName = Cortex;
 			productReference = EBE2232138D8CEDD4341B7CB /* Cortex.app */;
@@ -147,6 +182,9 @@
 			);
 			mainGroup = F5F27EF0BE549B59C229504B;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				825670B9844CDDCB4332C44E /* XCRemoteSwiftPackageReference "llama.cpp" */,
+			);
 			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
@@ -178,13 +216,20 @@
 				06DB1241BDCAE863C06B86D2 /* ContentType.swift in Sources */,
 				1BE1F1BD5CAFF5EC1BDB1A08 /* ContentView.swift in Sources */,
 				1A8CFB01C9CEDFB1C044B0B8 /* CortexApp.swift in Sources */,
+				31D0E4ED1BA5D2DAD7373CD8 /* LLMService.swift in Sources */,
+				06D16123C752D5401983D229 /* ProcessingPipeline.swift in Sources */,
+				D33C458419F21D919F88E3B0 /* PromptBuilder.swift in Sources */,
 				E7FC53A39E6F9D01E18B6171 /* RecordingQueueItem.swift in Sources */,
 				2B1FAFFEB4BD0081F3A770F6 /* RecordingView.swift in Sources */,
+				262C7CFF66FA0D4457E3DB13 /* ResponseParser.swift in Sources */,
+				147AED5EDE4C0159CC7345CF /* TranscriptionService.swift in Sources */,
 				C77388BB6A9A2132E4A3042F /* VaultBookmarkService.swift in Sources */,
 				B0892484D383B7294EA33111 /* VaultItem.swift in Sources */,
 				D769D059A02F008EF9D3631B /* VaultPickerView.swift in Sources */,
+				B0ED8F6727AC26E30EA6B68B /* VaultRouter.swift in Sources */,
 				2011953629C7A9D326E9FFBE /* VaultScannerService.swift in Sources */,
 				8F0C6A3BF7C887A3566F8F29 /* VaultStructures.swift in Sources */,
+				8B205768EAAF4311CFAACE19 /* VaultWriter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,6 +427,25 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		825670B9844CDDCB4332C44E /* XCRemoteSwiftPackageReference "llama.cpp" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ggml-org/llama.cpp";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4547.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A66391A5688F78BC4F1B9E64 /* llama */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 825670B9844CDDCB4332C44E /* XCRemoteSwiftPackageReference "llama.cpp" */;
+			productName = llama;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1348F49E45DC225520E6616C /* Project object */;
 }

@@ -8,6 +8,9 @@ struct CortexApp: App {
     @State private var vaultBookmarkService = VaultBookmarkService()
     @State private var vaultScanner = VaultScannerService()
     @State private var backgroundTaskService = BackgroundTaskService()
+    @State private var transcriptionService = TranscriptionService()
+    @State private var llmService = LLMService()
+    @State private var processingPipeline = ProcessingPipeline()
     @Environment(\.scenePhase) private var scenePhase
 
     let modelContainer: ModelContainer
@@ -29,6 +32,7 @@ struct CortexApp: App {
                 .environment(audioService)
                 .environment(vaultBookmarkService)
                 .environment(vaultScanner)
+                .environment(processingPipeline)
                 .onOpenURL { url in
                     // Action Button configured to open cortex://record
                     if url.scheme == "cortex" && url.host == "record" {
@@ -54,6 +58,12 @@ struct CortexApp: App {
             }
             // setup audio session once (permission is requested here, not on every record)
             audioService.setupAudioSession()
+            // request speech auth on first active
+            Task {
+                _ = await transcriptionService.requestAuthorization()
+            }
+            // process any pending recordings (hybrid: foreground picks up what background didn't finish)
+            triggerProcessing()
         case .background:
             if appState.isRecording {
                 if let url = audioService.stopRecording() {
@@ -69,6 +79,34 @@ struct CortexApp: App {
             }
         default:
             break
+        }
+    }
+
+    private func triggerProcessing() {
+        guard !processingPipeline.isProcessing else { return }
+
+        // wire background task callback
+        backgroundTaskService.onProcess = { [self] in
+            await processingPipeline.processAllPending(
+                context: modelContainer.mainContext,
+                vaultBookmark: vaultBookmarkService,
+                vaultScanner: vaultScanner,
+                transcriptionService: transcriptionService,
+                llmService: llmService,
+                appState: appState
+            )
+        }
+
+        // also process immediately in foreground
+        Task {
+            await processingPipeline.processAllPending(
+                context: modelContainer.mainContext,
+                vaultBookmark: vaultBookmarkService,
+                vaultScanner: vaultScanner,
+                transcriptionService: transcriptionService,
+                llmService: llmService,
+                appState: appState
+            )
         }
     }
 }
