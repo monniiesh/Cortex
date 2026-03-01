@@ -111,6 +111,47 @@ struct VaultWriter {
         if let err = writeError { throw err }
     }
 
+    // toggle a checkbox in an existing .md file (fire and forget)
+    static func toggleCheckbox(text: String, isCompleted: Bool, inFile relativePath: String, vaultURL: URL) {
+        let fileURL = vaultURL.appendingPathComponent(relativePath)
+        var coordError: NSError?
+        let coordinator = NSFileCoordinator(filePresenter: nil)
+
+        coordinator.coordinate(writingItemAt: fileURL, options: .forMerging, error: &coordError) { coordURL in
+            do {
+                let content = try String(contentsOf: coordURL, encoding: .utf8)
+                var lines = content.components(separatedBy: "\n")
+                var found = false
+
+                for idx in 0 ..< lines.count {
+                    let line = lines[idx]
+                    guard line.contains(text) else { continue }
+
+                    if isCompleted && line.contains("- [ ]") {
+                        lines[idx] = line.replacingOccurrences(of: "- [ ]", with: "- [x]")
+                        found = true
+                        break
+                    } else if !isCompleted && line.contains("- [x]") {
+                        lines[idx] = line.replacingOccurrences(of: "- [x]", with: "- [ ]")
+                        found = true
+                        break
+                    }
+                }
+
+                if found {
+                    let updated = lines.joined(separator: "\n")
+                    try updated.write(to: coordURL, atomically: true, encoding: .utf8)
+                }
+            } catch {
+                print("Error: toggleCheckbox failed for \(relativePath): \(error)")
+            }
+        }
+
+        if let err = coordError {
+            print("Error: NSFileCoordinator error in toggleCheckbox: \(err)")
+        }
+    }
+
     // MARK: - Private
 
     private static func writeToFile(content: String, fileURL: URL) throws {

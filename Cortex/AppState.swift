@@ -20,6 +20,9 @@ class AppState {
     // onboarding
     var hasCompletedOnboarding = false
 
+    // tab bar
+    var selectedTab = 0
+
     // Action Button triggered launch
     var launchedFromActionButton = false
 }
