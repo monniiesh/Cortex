@@ -1,61 +1,46 @@
-import Speech
+import Foundation
+import WhisperKit
 import Observation
 
 @Observable
-class TranscriptionService {
+class TranscriptionService: @unchecked Sendable {
 
-    var isAuthorized = false
+    var isAuthorized = true
+    var isModelReady = false
+
+    private var whisperKit: WhisperKit?
 
     func requestAuthorization() async -> Bool {
-        await withCheckedContinuation { continuation in
-            SFSpeechRecognizer.requestAuthorization { status in
-                let granted = status == .authorized
-                DispatchQueue.main.async {
-                    self.isAuthorized = granted
-                }
-                continuation.resume(returning: granted)
-            }
-        }
+        // WhisperKit only needs microphone — handled by AudioRecordingService
+        isAuthorized = true
+        return true
     }
 
     func transcribe(audioURL: URL) async throws -> String {
-        guard isAuthorized else {
-            throw TranscriptionError.authDenied
+        // lazy-init on first call (downloads model from HuggingFace if not cached)
+        if whisperKit == nil {
+            whisperKit = try await WhisperKit(model: "openai_whisper-large-v3-v20240930_626MB")
+            isModelReady = true
         }
 
-        guard let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US")),
-              recognizer.isAvailable else {
+        guard let kit = whisperKit else {
             throw TranscriptionError.recognizerUnavailable
         }
 
-        let request = SFSpeechURLRecognitionRequest(url: audioURL)
-        request.requiresOnDeviceRecognition = true
-        request.shouldReportPartialResults = false
+        let results = try await kit.transcribe(audioPath: audioURL.path)
+        let text = results.map { $0.text }.joined(separator: " ")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
 
-        return try await withCheckedThrowingContinuation { continuation in
-            var hasResumed = false
-
-            recognizer.recognitionTask(with: request) { result, error in
-                guard !hasResumed else { return }
-
-                if let error {
-                    hasResumed = true
-                    print("Error: transcription failed: \(error)")
-                    continuation.resume(throwing: error)
-                    return
-                }
-
-                guard let result, result.isFinal else { return }
-
-                hasResumed = true
-                let text = result.bestTranscription.formattedString
-                if text.isEmpty {
-                    continuation.resume(throwing: TranscriptionError.noResult)
-                } else {
-                    continuation.resume(returning: text)
-                }
-            }
+        guard !text.isEmpty else {
+            throw TranscriptionError.noResult
         }
+
+        return text
+    }
+
+    func unloadModel() {
+        whisperKit = nil
+        isModelReady = false
     }
 }
 
@@ -69,7 +54,7 @@ enum TranscriptionError: Error, LocalizedError {
         case .authDenied:
             return "Speech recognition authorization denied"
         case .recognizerUnavailable:
-            return "Speech recognizer unavailable for this locale or device"
+            return "Speech model unavailable"
         case .noResult:
             return "No transcription result returned"
         }

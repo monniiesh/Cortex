@@ -40,8 +40,6 @@
 	<string>Cortex needs microphone access to record voice notes for transcription and sorting.</string>
 	<key>NSRemindersFullAccessUsageDescription</key>
 	<string>Cortex creates reminders from your voice notes when time-bound tasks are detected.</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Cortex uses on-device speech recognition to transcribe your voice recordings.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

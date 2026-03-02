@@ -8,8 +8,11 @@ options:
 
 packages:
   llama:
-    url: https://github.com/ggml-org/llama.cpp
-    from: "4547.0.0"
+    url: https://github.com/StanfordBDHG/llama.cpp
+    from: "0.3.3"
+  WhisperKit:
+    url: https://github.com/argmaxinc/WhisperKit
+    from: "0.9.0"
 
 settings:
   base:
@@ -23,9 +26,14 @@ targets:
     type: application
     platform: iOS
     sources:
-      - Cortex
+      - path: Cortex
+        excludes:
+          - "**/CLAUDE.md"
+          - "**/.claude"
+          - "**/tasks"
     dependencies:
       - package: llama
+      - package: WhisperKit
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.moni.cortex
@@ -35,11 +43,12 @@ targets:
         SWIFT_EMIT_LOC_STRINGS: "YES"
         ENABLE_PREVIEWS: "YES"
         CODE_SIGN_ENTITLEMENTS: Cortex/Cortex.entitlements
+        CLANG_CXX_LANGUAGE_STANDARD: "c++17"
+        OTHER_SWIFT_FLAGS: "-cxx-interoperability-mode=default"
     info:
       path: Cortex/Info.plist
       properties:
         NSMicrophoneUsageDescription: "Cortex needs microphone access to record voice notes for transcription and sorting."
-        NSSpeechRecognitionUsageDescription: "Cortex uses on-device speech recognition to transcribe your voice recordings."
         NSCalendarsFullAccessUsageDescription: "Cortex creates calendar events from your voice notes when appointments are detected."
         NSRemindersFullAccessUsageDescription: "Cortex creates reminders from your voice notes when time-bound tasks are detected."
         UIBackgroundModes:

@@ -45,6 +45,11 @@ struct CortexApp: App {
                 .onChange(of: scenePhase) { oldPhase, newPhase in
                     handleScenePhaseChange(from: oldPhase, to: newPhase)
                 }
+                .onChange(of: appState.isRecording) { wasRecording, isRecording in
+                    if wasRecording && !isRecording {
+                        triggerProcessing()
+                    }
+                }
         }
         .modelContainer(modelContainer)
     }
@@ -61,10 +66,6 @@ struct CortexApp: App {
             }
             // setup audio session once (permission is requested here, not on every record)
             audioService.setupAudioSession()
-            // request speech auth on first active
-            Task {
-                _ = await transcriptionService.requestAuthorization()
-            }
             // process any pending recordings (hybrid: foreground picks up what background didn't finish)
             triggerProcessing()
         case .background:

@@ -13,51 +13,71 @@ struct PromptBuilder {
             candidateLines += "\(id): \(parts.joined(separator: " — "))\n"
         }
 
+        // when no candidates match, tell the LLM explicitly
+        let candidateSection: String
+        if candidates.isEmpty {
+            candidateSection = """
+            Candidate files: (none)
+            Use "new_path" for every item.
+            """
+        } else {
+            candidateSection = """
+            Candidate files:
+            \(candidateLines)
+            """
+        }
+
         return """
-You are Cortex, an intelligent note-sorting assistant.
+You are Cortex, a note-sorting assistant.
 
 Vault structure:
 \(folderTree)
 
-Candidate files:
-\(candidateLines)
+\(candidateSection)
 Rules:
-1. Break the transcript into individual distinct points.
-2. For each point, determine its type: "reminder", "todo", "note", or "event".
-3. Route each point to candidate files using their IDs (f0, f1, f2, etc.).
-4. If a point belongs in multiple files, list ALL relevant IDs in the "files" array (most specific first). Most items have 1 file. Use 2+ only when content genuinely belongs in multiple places.
-5. If no candidate file matches, set files to [] and provide a path in "new_path" (format: "folder/filename.md").
-6. If a point contains a date/time, extract it as ISO 8601.
-7. For reminders and events with no specific time, infer a reasonable default time.
-8. Respond ONLY with a valid JSON array. No preamble, no explanation.
+1. Split transcript into separate points.
+2. "todo" ONLY for explicit buy/get/pick-up requests. Everything else is "note". Do NOT infer actions — "VHO research" is ONE note, NOT a note + a "research" todo. "Batman is good" is ONE note, NOT a note + a "watch movie" todo.
+3. Route to candidate files by ID (f0, f1, etc.) only if the EXACT topic matches.
+4. No candidate match → set files to [] and use "new_path". Format: "Category/subject.md". NEVER use generic names (Index, Notes, tools, Misc). Different subjects need different files even in the same category.
+5. Text format: item name + brief context in parentheses. Examples: "JJK (recommended anime)", "Batman (good movie)", "QC Super (VHO network tool)". Keep it short but include what it IS.
+6. If user says "{topic} research", file = "{topic}.md". Name the file after the RESEARCH SUBJECT, not the tool mentioned.
+7. Group similar items into ONE file. Tools go in "tools.md", groceries in "grocery.md", anime in "anime.md". Do NOT create a separate file per item.
+8. Extract datetime as ISO 8601 when present.
+9. Output ONLY a JSON array.
 
-Output format:
-[
-  {
-    "type": "note" | "todo" | "reminder" | "event",
-    "text": "cleaned, concise version of the point",
-    "files": ["f0", "f3"],
-    "new_path": null,
-    "datetime": "2026-03-01T09:00:00" | null,
-    "native_action": true | false
-  }
-]
+Example:
+Input: "buy butter also jjk is a recommended anime and batman is a good movie and vho research on qc super network tool and neofetch is a good tool"
+[{"type":"todo","text":"butter","files":[],"new_path":"Lists/grocery.md","datetime":null,"native_action":false},{"type":"note","text":"JJK (recommended anime)","files":[],"new_path":"Entertainment/anime.md","datetime":null,"native_action":false},{"type":"note","text":"Batman (good movie)","files":[],"new_path":"Entertainment/movies.md","datetime":null,"native_action":false},{"type":"note","text":"QC Super (VHO network tool)","files":[],"new_path":"Research/vho.md","datetime":null,"native_action":false},{"type":"note","text":"neofetch (good tool)","files":[],"new_path":"Tools/tools.md","datetime":null,"native_action":false}]
 """
     }
 
     static func buildUserPrompt(transcript: String) -> String {
-        return "Transcript:\n\(transcript)"
+        return "Transcript:\n\(transcript)\nExtract EVERY distinct topic. Do NOT stop after the first one."
+    }
+
+    static func buildRetryUserPrompt(transcript: String, alreadyCaptured: [String], uncoveredKeywords: [String]) -> String {
+        let captured = alreadyCaptured.enumerated()
+            .map { "\($0.offset + 1). \($0.element)" }
+            .joined(separator: "\n")
+        let hint = uncoveredKeywords.isEmpty ? ""
+            : "\nUncovered words: \(uncoveredKeywords.prefix(8).joined(separator: ", ")). Process a topic with these words."
+        return """
+        Transcript:
+        \(transcript)
+
+        Already captured (DO NOT repeat):
+        \(captured)
+        \(hint)
+        """
     }
 
     static func formatChatPrompt(systemPrompt: String, userPrompt: String) -> String {
         return """
-<|system|>
-\(systemPrompt)
-<|end|>
-<|user|>
-\(userPrompt)
-<|end|>
-<|assistant|>
+<|im_start|>system
+\(systemPrompt)<|im_end|>
+<|im_start|>user
+\(userPrompt)<|im_end|>
+<|im_start|>assistant
 """
     }
 }

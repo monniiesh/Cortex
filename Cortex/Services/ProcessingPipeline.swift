@@ -4,7 +4,7 @@ import SwiftData
 
 @MainActor
 @Observable
-class ProcessingPipeline {
+class ProcessingPipeline: @unchecked Sendable {
 
     var isProcessing = false
     var currentStep = ""
@@ -44,6 +44,8 @@ class ProcessingPipeline {
                 currentStep = "Transcribing..."
 
                 let transcript = try await transcriptionService.transcribe(audioURL: item.audioFileURL)
+                // free Whisper memory before loading Phi-3
+                transcriptionService.unloadModel()
 
                 item.transcript = transcript
                 item.status = .processing
@@ -63,8 +65,6 @@ class ProcessingPipeline {
 
                 // V2 prompt — candidates may be empty for new vaults (LLM uses new_path)
                 let systemPrompt = PromptBuilder.buildSystemPrompt(candidates: candidates, folderTree: folderTree)
-                let userPrompt = PromptBuilder.buildUserPrompt(transcript: transcript)
-                let combinedPrompt = PromptBuilder.formatChatPrompt(systemPrompt: systemPrompt, userPrompt: userPrompt)
 
                 // load model if needed
                 if !llmService.isModelLoaded {
@@ -76,12 +76,77 @@ class ProcessingPipeline {
                     }
                 }
 
+                // [3] CLASSIFY — multi-pass extraction
+                // Phi-3 mini often stops after 1 item. We retry with "already captured"
+                // hints until coverage is sufficient or no new items are found.
                 currentStep = "Classifying..."
-                let response = try await llmService.generate(prompt: combinedPrompt, grammar: LLMService.defaultGrammarJSON)
+                var allParsedItems: [ResponseParser.ParsedItem] = []
+                var capturedTexts: [String] = []
+                let maxPasses = 2
 
-                // [3] POST-LLM: parse, resolve IDs, dedup, route, write
+                let transcriptKW = Set(VaultPreFilter.extractKeywords(from: transcript))
+                var consecutiveDups = 0
+
+                for pass in 0 ..< maxPasses {
+                    // compute uncovered keywords for retry hint
+                    let capturedKW = Set(capturedTexts.flatMap {
+                        VaultPreFilter.extractKeywords(from: $0)
+                    })
+                    let uncovered = Array(transcriptKW.subtracting(capturedKW))
+
+                    let userPrompt: String
+                    if pass == 0 {
+                        userPrompt = PromptBuilder.buildUserPrompt(transcript: transcript)
+                    } else {
+                        userPrompt = PromptBuilder.buildRetryUserPrompt(
+                            transcript: transcript,
+                            alreadyCaptured: capturedTexts,
+                            uncoveredKeywords: uncovered
+                        )
+                    }
+                    let prompt = PromptBuilder.formatChatPrompt(
+                        systemPrompt: systemPrompt, userPrompt: userPrompt
+                    )
+
+                    let response = try await llmService.generate(
+                        prompt: prompt, grammar: LLMService.defaultGrammarJSON
+                    )
+                    let newItems = ResponseParser.parse(jsonString: response)
+
+                    // collect only genuinely new items (dedup by keyword overlap)
+                    var addedNew = false
+                    for item in newItems {
+                        let isDup = capturedTexts.contains { existing in
+                            Self.textOverlap(existing, item.text) > 0.5
+                        }
+                        if !isDup {
+                            allParsedItems.append(item)
+                            capturedTexts.append(item.text)
+                            addedNew = true
+                        }
+                    }
+
+                    // update coverage
+                    let nowCapturedKW = Set(capturedTexts.flatMap {
+                        VaultPreFilter.extractKeywords(from: $0)
+                    })
+                    let covered = transcriptKW.intersection(nowCapturedKW).count
+                    let coverage = transcriptKW.isEmpty ? 1.0
+                        : Double(covered) / Double(transcriptKW.count)
+
+                    print("DEBUG : pass \(pass + 1) — \(newItems.count) items, \(allParsedItems.count) total, coverage \(String(format: "%.0f", coverage * 100))%, uncovered: \(uncovered.prefix(5))")
+
+                    // stop if coverage is good (lowered from 0.5 — shorter text format covers fewer keywords)
+                    if coverage >= 0.3 { break }
+
+                    // stop after 2 consecutive passes with no new items
+                    consecutiveDups = addedNew ? 0 : consecutiveDups + 1
+                    if consecutiveDups >= 2 { break }
+                }
+
+                // [4] POST-LLM: resolve IDs, dedup, route, write
                 currentStep = "Writing to vault..."
-                let parsedItems = ResponseParser.parse(jsonString: response)
+                let parsedItems = allParsedItems
 
                 let sourceID = item.id
                 var recentEntries: [RecentEntry] = []
@@ -113,8 +178,9 @@ class ProcessingPipeline {
                         }
                     }
 
-                    // add new_path if provided
-                    if let newPath = parsed.newPath {
+                    // add new_path if provided and non-empty
+                    if let newPath = parsed.newPath,
+                       !newPath.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                         resolvedFiles.append(newPath)
                     }
 
@@ -206,8 +272,10 @@ class ProcessingPipeline {
             }
         }
 
-        // unload model to free ~2GB RAM
-        llmService.unloadModel()
+        // re-scan vault so HomeView picks up new/modified files
+        if let vaultURL = vaultBookmark.loadBookmarkURL() {
+            await vaultScanner.scanAsync(vaultURL: vaultURL)
+        }
 
         // only show banner if items were actually sorted
         let count = sortedItemCount
@@ -221,6 +289,16 @@ class ProcessingPipeline {
     }
 
     // MARK: - Private
+
+    // Jaccard similarity on keywords — used to dedup across LLM passes
+    private static func textOverlap(_ a: String, _ b: String) -> Double {
+        let kwA = Set(VaultPreFilter.extractKeywords(from: a))
+        let kwB = Set(VaultPreFilter.extractKeywords(from: b))
+        guard !kwA.isEmpty || !kwB.isEmpty else { return 0 }
+        let intersection = kwA.intersection(kwB).count
+        let union = kwA.union(kwB).count
+        return Double(intersection) / Double(max(union, 1))
+    }
 
     private func isDuplicate(contentHash: String, sourceRecordingID: UUID, context: ModelContext) -> Bool {
         let descriptor = FetchDescriptor<VaultItem>(
