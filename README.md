@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="Cortex/Assets.xcassets/AppIcon.appiconset/AppIcon.png" width="120" alt="Cortex app icon" />
-</p>
-
 <h1 align="center">Cortex</h1>
 
 <p align="center">
