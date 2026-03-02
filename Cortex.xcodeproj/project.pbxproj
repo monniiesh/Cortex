@@ -14,34 +14,58 @@
 		1A8CFB01C9CEDFB1C044B0B8 /* CortexApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AB59DE31F1BFE04B990918 /* CortexApp.swift */; };
 		1BE1F1BD5CAFF5EC1BDB1A08 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFB17265C00DC69408261AF /* ContentView.swift */; };
 		2011953629C7A9D326E9FFBE /* VaultScannerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CFA8C9F658BF1D9027F5E7 /* VaultScannerService.swift */; };
+		24BA6EAD5F90AABA357292B0 /* CaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76FA623A6DDAF51B63AC59E /* CaptureView.swift */; };
 		262C7CFF66FA0D4457E3DB13 /* ResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4A642A8DD1B18CBC079758 /* ResponseParser.swift */; };
 		2B1FAFFEB4BD0081F3A770F6 /* RecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E4B4F2B6A305A84AFE806E /* RecordingView.swift */; };
+		314DDC671CDA731043684DBB /* FileDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1448E1F1A5ACC592C6F484 /* FileDetailView.swift */; };
 		31D0E4ED1BA5D2DAD7373CD8 /* LLMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A489CAE659115D2E907CA606 /* LLMService.swift */; };
+		3BF5B1A786767A09842FA231 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8E916B294DE7999907D8BC /* HomeView.swift */; };
 		51AFAD638785FCEDA8CA1B29 /* AudioRecordingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15200713CA84E2E1CE377A6 /* AudioRecordingService.swift */; };
+		520AA35259923CDC5428B770 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32F9319E854316C01CBCD /* Theme.swift */; };
+		5AF3A709BEAC1B715DF227A6 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3514EF5C72674B514898B1 /* OnboardingView.swift */; };
+		6788A12874B92470AF82CE85 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4949244A1F90DF8FD676F40A /* SearchView.swift */; };
+		7E4BAE0DE24D20CACE4004D8 /* GBNFParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483D4A95AC6D50D20CB98DC5 /* GBNFParser.swift */; };
+		84CEE2C6F0E7536596331C5C /* FolderTreeBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD5BA9A38076649145EEBD6 /* FolderTreeBuilder.swift */; };
 		8B205768EAAF4311CFAACE19 /* VaultWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617ACE46A1E99C7C5DAD48C8 /* VaultWriter.swift */; };
 		8F0C6A3BF7C887A3566F8F29 /* VaultStructures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE989A6F4AF4A89F163EDAA /* VaultStructures.swift */; };
+		94CF74261192229A8A16EBD2 /* WhisperKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2DFA9E3D50A5E00EA281888F /* WhisperKit */; };
+		A03F5E1DBA3879136D842CF1 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5597B17B34C8284EF3DF5D9 /* SettingsView.swift */; };
 		B0892484D383B7294EA33111 /* VaultItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E19BA10E5F22C0F4460BF1 /* VaultItem.swift */; };
 		B0ED8F6727AC26E30EA6B68B /* VaultRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D975EFD7BD97AA8EE476304F /* VaultRouter.swift */; };
 		B4ACEFF94B71D28563F91F90 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93D93605BB32716D91832B6 /* AppState.swift */; };
+		BB4564AE2A9618D496315FBF /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078D963483660FFC61A03161 /* MainTabView.swift */; };
 		C3A6806CD33C5C2836B9B1E9 /* EventKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7459717883FA8FD620960E21 /* EventKitService.swift */; };
 		C559D061B59577D07AEF6DBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50A50C1F110A931D936F902B /* Assets.xcassets */; };
+		C661C5F653B7551332B793EB /* FolderDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832668D68BE98FE3309FF95F /* FolderDetailView.swift */; };
 		C77388BB6A9A2132E4A3042F /* VaultBookmarkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E03242B52E3B3B6ED06710B /* VaultBookmarkService.swift */; };
+		CBB172099856F3C6834C4F36 /* VaultPreFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6417FD9236D0B30F6E09989C /* VaultPreFilter.swift */; };
 		D33C458419F21D919F88E3B0 /* PromptBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9F884075141593E807A6BD /* PromptBuilder.swift */; };
 		D769D059A02F008EF9D3631B /* VaultPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DA8190C670EE603C41970E /* VaultPickerView.swift */; };
+		DE8BBD9920DD52185AE6B100 /* qwen2.5-3b-instruct-q4_k_m.gguf in Resources */ = {isa = PBXBuildFile; fileRef = 49E71EF02C530DD43ED8CAB1 /* qwen2.5-3b-instruct-q4_k_m.gguf */; };
 		E7FC53A39E6F9D01E18B6171 /* RecordingQueueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20AFB7B3C7F0EA396F20054 /* RecordingQueueItem.swift */; };
 		F8897C0432331A8F3A846E0A /* BackgroundTaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B3BE4B17D4B25BEFF88B35 /* BackgroundTaskService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		02B32F9319E854316C01CBCD /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		06C6B91A16A11ED9552C48CB /* ContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentType.swift; sourceTree = "<group>"; };
+		078D963483660FFC61A03161 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		09DA8190C670EE603C41970E /* VaultPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultPickerView.swift; sourceTree = "<group>"; };
+		0E8E916B294DE7999907D8BC /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		13B3BE4B17D4B25BEFF88B35 /* BackgroundTaskService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTaskService.swift; sourceTree = "<group>"; };
 		2E03242B52E3B3B6ED06710B /* VaultBookmarkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultBookmarkService.swift; sourceTree = "<group>"; };
 		41E801D912A904C81126D343 /* TranscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionService.swift; sourceTree = "<group>"; };
+		483D4A95AC6D50D20CB98DC5 /* GBNFParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBNFParser.swift; sourceTree = "<group>"; };
+		4949244A1F90DF8FD676F40A /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		49E71EF02C530DD43ED8CAB1 /* qwen2.5-3b-instruct-q4_k_m.gguf */ = {isa = PBXFileReference; path = "qwen2.5-3b-instruct-q4_k_m.gguf"; sourceTree = "<group>"; };
+		4AD5BA9A38076649145EEBD6 /* FolderTreeBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderTreeBuilder.swift; sourceTree = "<group>"; };
+		4C1448E1F1A5ACC592C6F484 /* FileDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDetailView.swift; sourceTree = "<group>"; };
 		50A50C1F110A931D936F902B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		57E19BA10E5F22C0F4460BF1 /* VaultItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultItem.swift; sourceTree = "<group>"; };
 		617ACE46A1E99C7C5DAD48C8 /* VaultWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultWriter.swift; sourceTree = "<group>"; };
+		6417FD9236D0B30F6E09989C /* VaultPreFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultPreFilter.swift; sourceTree = "<group>"; };
 		7459717883FA8FD620960E21 /* EventKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventKitService.swift; sourceTree = "<group>"; };
+		832668D68BE98FE3309FF95F /* FolderDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDetailView.swift; sourceTree = "<group>"; };
 		8BE989A6F4AF4A89F163EDAA /* VaultStructures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultStructures.swift; sourceTree = "<group>"; };
 		90CFA8C9F658BF1D9027F5E7 /* VaultScannerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultScannerService.swift; sourceTree = "<group>"; };
 		A15200713CA84E2E1CE377A6 /* AudioRecordingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingService.swift; sourceTree = "<group>"; };
@@ -52,12 +76,15 @@
 		C20F64FCBE4A44C13D917A4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C8E4B4F2B6A305A84AFE806E /* RecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingView.swift; sourceTree = "<group>"; };
 		CA4A642A8DD1B18CBC079758 /* ResponseParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseParser.swift; sourceTree = "<group>"; };
+		D76FA623A6DDAF51B63AC59E /* CaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureView.swift; sourceTree = "<group>"; };
 		D93D93605BB32716D91832B6 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		D975EFD7BD97AA8EE476304F /* VaultRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultRouter.swift; sourceTree = "<group>"; };
 		E52A207B63EDD3AA005DFF0D /* Cortex.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cortex.entitlements; sourceTree = "<group>"; };
+		E5597B17B34C8284EF3DF5D9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		EBE2232138D8CEDD4341B7CB /* Cortex.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Cortex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F20AFB7B3C7F0EA396F20054 /* RecordingQueueItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingQueueItem.swift; sourceTree = "<group>"; };
 		F53A48943D3511EDDA1943D3 /* ProcessingPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessingPipeline.swift; sourceTree = "<group>"; };
+		FC3514EF5C72674B514898B1 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +93,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				17CADD3A174B45455B3F0B1B /* llama in Frameworks */,
+				94CF74261192229A8A16EBD2 /* WhisperKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +108,7 @@
 				E52A207B63EDD3AA005DFF0D /* Cortex.entitlements */,
 				A8AB59DE31F1BFE04B990918 /* CortexApp.swift */,
 				C20F64FCBE4A44C13D917A4F /* Info.plist */,
+				49E71EF02C530DD43ED8CAB1 /* qwen2.5-3b-instruct-q4_k_m.gguf */,
 				98B859AD4417ED86E7B32FEE /* Models */,
 				3648C5A16A3C6EDA7A2B056E /* Services */,
 				2C260250B223BA4AB274EF5E /* Views */,
@@ -90,8 +119,17 @@
 		2C260250B223BA4AB274EF5E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D76FA623A6DDAF51B63AC59E /* CaptureView.swift */,
 				ACFB17265C00DC69408261AF /* ContentView.swift */,
+				4C1448E1F1A5ACC592C6F484 /* FileDetailView.swift */,
+				832668D68BE98FE3309FF95F /* FolderDetailView.swift */,
+				0E8E916B294DE7999907D8BC /* HomeView.swift */,
+				078D963483660FFC61A03161 /* MainTabView.swift */,
+				FC3514EF5C72674B514898B1 /* OnboardingView.swift */,
 				C8E4B4F2B6A305A84AFE806E /* RecordingView.swift */,
+				4949244A1F90DF8FD676F40A /* SearchView.swift */,
+				E5597B17B34C8284EF3DF5D9 /* SettingsView.swift */,
+				02B32F9319E854316C01CBCD /* Theme.swift */,
 				09DA8190C670EE603C41970E /* VaultPickerView.swift */,
 			);
 			path = Views;
@@ -103,12 +141,15 @@
 				A15200713CA84E2E1CE377A6 /* AudioRecordingService.swift */,
 				13B3BE4B17D4B25BEFF88B35 /* BackgroundTaskService.swift */,
 				7459717883FA8FD620960E21 /* EventKitService.swift */,
+				4AD5BA9A38076649145EEBD6 /* FolderTreeBuilder.swift */,
+				483D4A95AC6D50D20CB98DC5 /* GBNFParser.swift */,
 				A489CAE659115D2E907CA606 /* LLMService.swift */,
 				F53A48943D3511EDDA1943D3 /* ProcessingPipeline.swift */,
 				BF9F884075141593E807A6BD /* PromptBuilder.swift */,
 				CA4A642A8DD1B18CBC079758 /* ResponseParser.swift */,
 				41E801D912A904C81126D343 /* TranscriptionService.swift */,
 				2E03242B52E3B3B6ED06710B /* VaultBookmarkService.swift */,
+				6417FD9236D0B30F6E09989C /* VaultPreFilter.swift */,
 				D975EFD7BD97AA8EE476304F /* VaultRouter.swift */,
 				90CFA8C9F658BF1D9027F5E7 /* VaultScannerService.swift */,
 				617ACE46A1E99C7C5DAD48C8 /* VaultWriter.swift */,
@@ -161,6 +202,7 @@
 			name = Cortex;
 			packageProductDependencies = (
 				A66391A5688F78BC4F1B9E64 /* llama */,
+				2DFA9E3D50A5E00EA281888F /* WhisperKit */,
 			);
 			productName = Cortex;
 			productReference = EBE2232138D8CEDD4341B7CB /* Cortex.app */;
@@ -186,7 +228,8 @@
 			mainGroup = F5F27EF0BE549B59C229504B;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				825670B9844CDDCB4332C44E /* XCRemoteSwiftPackageReference "llama.cpp" */,
+				3EFE2406A07528C6C50E044D /* XCRemoteSwiftPackageReference "WhisperKit" */,
+				502AEC9FACF77341642873DB /* XCRemoteSwiftPackageReference "llama.cpp" */,
 			);
 			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
@@ -203,6 +246,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C559D061B59577D07AEF6DBF /* Assets.xcassets in Resources */,
+				DE8BBD9920DD52185AE6B100 /* qwen2.5-3b-instruct-q4_k_m.gguf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,20 +260,32 @@
 				B4ACEFF94B71D28563F91F90 /* AppState.swift in Sources */,
 				51AFAD638785FCEDA8CA1B29 /* AudioRecordingService.swift in Sources */,
 				F8897C0432331A8F3A846E0A /* BackgroundTaskService.swift in Sources */,
+				24BA6EAD5F90AABA357292B0 /* CaptureView.swift in Sources */,
 				06DB1241BDCAE863C06B86D2 /* ContentType.swift in Sources */,
 				1BE1F1BD5CAFF5EC1BDB1A08 /* ContentView.swift in Sources */,
 				1A8CFB01C9CEDFB1C044B0B8 /* CortexApp.swift in Sources */,
 				C3A6806CD33C5C2836B9B1E9 /* EventKitService.swift in Sources */,
+				314DDC671CDA731043684DBB /* FileDetailView.swift in Sources */,
+				C661C5F653B7551332B793EB /* FolderDetailView.swift in Sources */,
+				84CEE2C6F0E7536596331C5C /* FolderTreeBuilder.swift in Sources */,
+				7E4BAE0DE24D20CACE4004D8 /* GBNFParser.swift in Sources */,
+				3BF5B1A786767A09842FA231 /* HomeView.swift in Sources */,
 				31D0E4ED1BA5D2DAD7373CD8 /* LLMService.swift in Sources */,
+				BB4564AE2A9618D496315FBF /* MainTabView.swift in Sources */,
+				5AF3A709BEAC1B715DF227A6 /* OnboardingView.swift in Sources */,
 				06D16123C752D5401983D229 /* ProcessingPipeline.swift in Sources */,
 				D33C458419F21D919F88E3B0 /* PromptBuilder.swift in Sources */,
 				E7FC53A39E6F9D01E18B6171 /* RecordingQueueItem.swift in Sources */,
 				2B1FAFFEB4BD0081F3A770F6 /* RecordingView.swift in Sources */,
 				262C7CFF66FA0D4457E3DB13 /* ResponseParser.swift in Sources */,
+				6788A12874B92470AF82CE85 /* SearchView.swift in Sources */,
+				A03F5E1DBA3879136D842CF1 /* SettingsView.swift in Sources */,
+				520AA35259923CDC5428B770 /* Theme.swift in Sources */,
 				147AED5EDE4C0159CC7345CF /* TranscriptionService.swift in Sources */,
 				C77388BB6A9A2132E4A3042F /* VaultBookmarkService.swift in Sources */,
 				B0892484D383B7294EA33111 /* VaultItem.swift in Sources */,
 				D769D059A02F008EF9D3631B /* VaultPickerView.swift in Sources */,
+				CBB172099856F3C6834C4F36 /* VaultPreFilter.swift in Sources */,
 				B0ED8F6727AC26E30EA6B68B /* VaultRouter.swift in Sources */,
 				2011953629C7A9D326E9FFBE /* VaultScannerService.swift in Sources */,
 				8F0C6A3BF7C887A3566F8F29 /* VaultStructures.swift in Sources */,
@@ -244,6 +300,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_ENTITLEMENTS = Cortex/Cortex.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
@@ -254,6 +311,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
+				OTHER_SWIFT_FLAGS = "-cxx-interoperability-mode=default";
 				PRODUCT_BUNDLE_IDENTIFIER = com.moni.cortex;
 				PRODUCT_NAME = Cortex;
 				SDKROOT = iphoneos;
@@ -266,6 +324,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_ENTITLEMENTS = Cortex/Cortex.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
@@ -276,6 +335,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
+				OTHER_SWIFT_FLAGS = "-cxx-interoperability-mode=default";
 				PRODUCT_BUNDLE_IDENTIFIER = com.moni.cortex;
 				PRODUCT_NAME = Cortex;
 				SDKROOT = iphoneos;
@@ -433,20 +493,33 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		825670B9844CDDCB4332C44E /* XCRemoteSwiftPackageReference "llama.cpp" */ = {
+		3EFE2406A07528C6C50E044D /* XCRemoteSwiftPackageReference "WhisperKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ggml-org/llama.cpp";
+			repositoryURL = "https://github.com/argmaxinc/WhisperKit";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4547.0.0;
+				minimumVersion = 0.9.0;
+			};
+		};
+		502AEC9FACF77341642873DB /* XCRemoteSwiftPackageReference "llama.cpp" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/StanfordBDHG/llama.cpp";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.3.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2DFA9E3D50A5E00EA281888F /* WhisperKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3EFE2406A07528C6C50E044D /* XCRemoteSwiftPackageReference "WhisperKit" */;
+			productName = WhisperKit;
+		};
 		A66391A5688F78BC4F1B9E64 /* llama */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 825670B9844CDDCB4332C44E /* XCRemoteSwiftPackageReference "llama.cpp" */;
+			package = 502AEC9FACF77341642873DB /* XCRemoteSwiftPackageReference "llama.cpp" */;
 			productName = llama;
 		};
 /* End XCSwiftPackageProductDependency section */

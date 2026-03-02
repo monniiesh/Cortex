@@ -16,7 +16,7 @@ private struct Ptr: @unchecked Sendable {
 }
 
 @Observable
-class LLMService: LLMServiceProtocol {
+class LLMService: LLMServiceProtocol, @unchecked Sendable {
 
     var isModelLoaded = false
     var modelPath: String?
@@ -39,7 +39,7 @@ boolean ::= "true" | "false"
 string ::= "\\"" ([^"\\\\] | "\\\\" .)* "\\""
 filearray ::= "[" ws "]" | "[" ws fileid ("," ws fileid)* ws "]"
 fileid ::= "\\"f" [0-9] "\\"" | "\\"f1" [0-9] "\\""
-ws ::= [ \\t\\n]*
+ws ::= " "?
 """
 
     func loadModel(from path: String) async throws {
@@ -52,7 +52,7 @@ ws ::= [ \\t\\n]*
             }
 
             var ctxParams = llama_context_default_params()
-            ctxParams.n_ctx = 2048
+            ctxParams.n_ctx = 4096
             ctxParams.n_threads = 4
 
             guard let loadedCtx = llama_new_context_with_model(loadedModel, ctxParams) else {
@@ -81,8 +81,20 @@ ws ::= [ \\t\\n]*
             let ctx = ctxPtr.raw
             let mdl = mdlPtr.raw
 
+            // clear KV cache so prior generate() calls don't bleed in
+            llama_kv_cache_clear(ctx)
+
+            // parse GBNF grammar if provided
+            var grammarPtr: OpaquePointer? = nil
+            if let grammarStr = grammar {
+                var parser = GBNFParser()
+                grammarPtr = parser.parse(grammarStr)
+                print("DEBUG : grammar parsed = \(grammarPtr != nil)")
+            }
+            defer { if let g = grammarPtr { llama_grammar_free(g) } }
+
             // tokenize prompt
-            let maxTokens = 2048
+            let maxTokens = 4096
             var tokens = [llama_token](repeating: 0, count: maxTokens)
             let promptCStr = prompt.cString(using: .utf8)!
             let nTokens = llama_tokenize(mdl, promptCStr, Int32(promptCStr.count - 1), &tokens, Int32(maxTokens), true, false)
@@ -109,41 +121,61 @@ ws ::= [ \\t\\n]*
                 throw LLMError.decodeFailed
             }
 
-            // set up sampler chain
-            let sparams = llama_sampler_chain_default_params()
-            let sampler = llama_sampler_chain_init(sparams)
-            defer { llama_sampler_free(sampler) }
-
-            llama_sampler_chain_add(sampler, llama_sampler_init_temp(0.8))
-            llama_sampler_chain_add(sampler, llama_sampler_init_dist(42))
-
-            // apply grammar if provided
-            if let grammarStr = grammar {
-                let grammarCStr = grammarStr.cString(using: .utf8)!
-                let rootName = "root".cString(using: .utf8)!
-                if let gs = llama_sampler_init_grammar(mdl, grammarCStr, rootName) {
-                    llama_sampler_chain_add(sampler, gs)
-                }
-            }
-
+            // sampling via low-level C API (StanfordBDHG v0.3.3 doesn't expose sampler chain)
+            let nVocabInt = Int(llama_n_vocab(mdl))
             let eosToken = llama_token_eos(mdl)
+            let eotToken = llama_token_eot(mdl)
             var output = ""
             var nCurr = Int(nTokens)
-            let maxGenTokens = 1024
+            let maxGenTokens = 768
+            print("DEBUG : prompt tokens = \(nTokens), max gen = \(maxGenTokens)")
             var piece = [CChar](repeating: 0, count: 32)
 
+            // stable pointer for candidate array (reused each iteration)
+            let candidatesPtr = UnsafeMutablePointer<llama_token_data>.allocate(capacity: nVocabInt)
+            defer { candidatesPtr.deallocate() }
+
+            // first call uses last token of prompt batch; subsequent calls use batch index 0
+            var logitIdx = Int32(nTokens - 1)
+
             while nCurr < Int(nTokens) + maxGenTokens {
-                let nextToken = llama_sampler_sample(sampler, ctx, Int32(nCurr - 1))
+                guard let logitsPtr = llama_get_logits_ith(ctx, logitIdx) else {
+                    break
+                }
 
-                if nextToken == eosToken { break }
+                // fill candidates from logits
+                for idx in 0 ..< nVocabInt {
+                    candidatesPtr[idx] = llama_token_data(id: Int32(idx), logit: logitsPtr[idx], p: 0)
+                }
+                var candidatesArray = llama_token_data_array(
+                    data: candidatesPtr,
+                    size: nVocabInt,
+                    sorted: false
+                )
 
-                let pieceLen = llama_token_to_piece(mdl, nextToken, &piece, Int32(piece.count), 0, false)
+                // grammar first (zeros out tokens that violate grammar), then temp + top-p
+                if let g = grammarPtr {
+                    llama_sample_grammar(ctx, &candidatesArray, g)
+                }
+                llama_sample_temp(ctx, &candidatesArray, 0.4)
+                llama_sample_top_p(ctx, &candidatesArray, 0.9, 1)
+                let nextToken = llama_sample_token(ctx, &candidatesArray)
+
+                if nextToken == eosToken || nextToken == eotToken {
+                    print("DEBUG : stopped at EOS/EOT after \(nCurr - Int(nTokens)) tokens")
+                    break
+                }
+
+                // advance grammar state
+                if let g = grammarPtr {
+                    llama_grammar_accept_token(ctx, g, nextToken)
+                }
+
+                let pieceLen = llama_token_to_piece(mdl, nextToken, &piece, Int32(piece.count), false)
                 if pieceLen > 0 {
                     let s = String(bytes: piece.prefix(Int(pieceLen)).map { UInt8(bitPattern: $0) }, encoding: .utf8) ?? ""
                     output += s
                 }
-
-                llama_sampler_accept(sampler, nextToken)
 
                 // decode next token
                 var nextBatch = llama_batch_init(1, 0, 1)
@@ -161,8 +193,20 @@ ws ::= [ \\t\\n]*
                     break
                 }
 
+                logitIdx = 0  // all subsequent decodes are single-token batches
                 nCurr += 1
             }
+
+            let genCount = nCurr - Int(nTokens)
+            if genCount >= maxGenTokens {
+                print("DEBUG : hit maxGenTokens limit (\(maxGenTokens))")
+            }
+            // strip special token text (e.g. <|end|>, <|endoftext|>) from output
+            output = output.replacingOccurrences(of: "<\\|[^|]+\\|>", with: "", options: .regularExpression)
+            output = output.trimmingCharacters(in: .whitespacesAndNewlines)
+
+            print("DEBUG : generated \(genCount) tokens, output length = \(output.count) chars")
+            print("DEBUG : raw output = \(output.prefix(500))")
 
             return output
         }.value
