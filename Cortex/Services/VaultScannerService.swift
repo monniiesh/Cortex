@@ -2,7 +2,7 @@ import Foundation
 import Observation
 
 @Observable
-class VaultScannerService {
+class VaultScannerService: @unchecked Sendable {
 
     var folders: [VaultFolder] = []
     var fileIndex: [VaultFileIndex] = []

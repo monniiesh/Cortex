@@ -8,9 +8,14 @@ struct FolderTreeBuilder {
         var lines: [String] = []
 
         for folder in folders.sorted(by: { $0.name < $1.name }) {
-            let name = folder.name == "/" ? "(root)" : folder.name + "/"
-            let count = folder.files.count
-            lines.append("\(name) (\(count) file\(count == 1 ? "" : "s"))")
+            let isRoot = folder.name == "/"
+            if !isRoot {
+                lines.append("\(folder.name)/")
+            }
+            for file in folder.files {
+                let prefix = isRoot ? "" : "  "
+                lines.append("\(prefix)\(file.name)")
+            }
         }
 
         return lines.joined(separator: "\n")

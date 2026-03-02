@@ -2,7 +2,7 @@ import Foundation
 import Observation
 
 @Observable
-class VaultBookmarkService {
+class VaultBookmarkService: @unchecked Sendable {
 
     private let bookmarkKey = "vaultFolderBookmark"
     var vaultURL: URL?

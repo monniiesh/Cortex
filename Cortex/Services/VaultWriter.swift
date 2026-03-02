@@ -166,7 +166,13 @@ struct VaultWriter {
                     try FileManager.default.createDirectory(at: parent, withIntermediateDirectories: true)
                 }
                 if !FileManager.default.fileExists(atPath: coordURL.path) {
-                    try "".write(to: coordURL, atomically: true, encoding: .utf8)
+                    // new file — add a heading derived from the filename
+                    let baseName = (coordURL.lastPathComponent as NSString).deletingPathExtension
+                    let title = baseName
+                        .replacingOccurrences(of: "-", with: " ")
+                        .replacingOccurrences(of: "_", with: " ")
+                        .localizedCapitalized
+                    try "# \(title)\n\n".write(to: coordURL, atomically: true, encoding: .utf8)
                 }
 
                 let handle = try FileHandle(forWritingTo: coordURL)

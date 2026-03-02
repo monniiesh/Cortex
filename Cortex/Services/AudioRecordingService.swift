@@ -2,7 +2,7 @@ import AVFoundation
 import Observation
 
 @Observable
-class AudioRecordingService {
+class AudioRecordingService: @unchecked Sendable {
 
     var isRecording = false
     var currentAmplitude: Float = 0
@@ -92,7 +92,7 @@ class AudioRecordingService {
         meteringTimer = nil
     }
 
-    func requestMicrophonePermission(completion: @escaping (Bool) -> Void) {
+    func requestMicrophonePermission(completion: @escaping @Sendable (Bool) -> Void) {
         AVAudioApplication.requestRecordPermission { granted in
             completion(granted)
         }

@@ -3,9 +3,9 @@ import Observation
 
 @MainActor
 @Observable
-class EventKitService {
+class EventKitService: @unchecked Sendable {
 
-    private let eventStore = EKEventStore()
+    nonisolated(unsafe) private let eventStore = EKEventStore()
 
     var remindersAuthorized = false
     var calendarAuthorized = false

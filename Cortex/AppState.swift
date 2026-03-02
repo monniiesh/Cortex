@@ -2,7 +2,7 @@ import Foundation
 import Observation
 
 @Observable
-class AppState {
+class AppState: @unchecked Sendable {
     // recording
     var isRecording = false
     var showRecordingUI = false

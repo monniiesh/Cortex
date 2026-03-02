@@ -1,6 +1,11 @@
-import BackgroundTasks
+@preconcurrency import BackgroundTasks
 
-class BackgroundTaskService {
+// wraps a non-Sendable value so it can cross Task boundaries
+private struct SendableBox<T>: @unchecked Sendable {
+    let value: T
+}
+
+class BackgroundTaskService: @unchecked Sendable {
 
     static let processingTaskID = "com.moni.cortex.processing"
     static let refreshTaskID = "com.moni.cortex.refresh"
@@ -43,24 +48,30 @@ class BackgroundTaskService {
 
     private func handleProcessingTask(_ task: BGProcessingTask) {
         scheduleProcessing()
-        let onProcess = self.onProcess
+
         task.expirationHandler = {
             task.setTaskCompleted(success: false)
         }
+
+        let callback = SendableBox(value: self.onProcess)
+
         Task {
-            await onProcess?()
+            await callback.value?()
             task.setTaskCompleted(success: true)
         }
     }
 
     private func handleRefreshTask(_ task: BGAppRefreshTask) {
         scheduleRefresh()
-        let onProcess = self.onProcess
+
         task.expirationHandler = {
             task.setTaskCompleted(success: false)
         }
+
+        let callback = SendableBox(value: self.onProcess)
+
         Task {
-            await onProcess?()
+            await callback.value?()
             task.setTaskCompleted(success: true)
         }
     }

@@ -65,6 +65,7 @@ enum Theme {
     static let springSnappy = Animation.spring(response: 0.25, dampingFraction: 0.85)
     static let fadeIn = Animation.easeOut(duration: 0.25)
 
+    @MainActor
     enum Haptic {
         static func light() {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()

@@ -28,9 +28,9 @@ struct HomeView: View {
                         LazyVGrid(columns: columns, spacing: 16) {
                             ForEach(Array(vaultScanner.folders.enumerated()), id: \.element.path) { idx, folder in
                                 NavigationLink(value: FolderNav(path: folder.path)) {
-                                    FolderCard(folder: folder)
+                                    FolderCardLabel(folder: folder)
                                 }
-                                .buttonStyle(.plain)
+                                .buttonStyle(CardPressStyle())
                                 .opacity(hasScanned ? 1 : 0)
                                 .offset(y: hasScanned ? 0 : 20)
                                 .animation(Theme.spring.delay(Double(idx) * 0.05), value: hasScanned)
@@ -87,10 +87,18 @@ struct FolderNav: Hashable {
     let path: String
 }
 
-struct FolderCard: View {
-    let folder: VaultFolder
+// button style that drives the press animation — doesn't steal taps from NavigationLink
+struct CardPressStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .shadow(color: Theme.cardShadow, radius: configuration.isPressed ? 2 : 6, y: configuration.isPressed ? 1 : 3)
+            .scaleEffect(configuration.isPressed ? 0.96 : 1.0)
+            .animation(Theme.springSnappy, value: configuration.isPressed)
+    }
+}
 
-    @State private var isPressed = false
+struct FolderCardLabel: View {
+    let folder: VaultFolder
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -117,15 +125,8 @@ struct FolderCard: View {
             RoundedRectangle(cornerRadius: 16)
                 .stroke(Theme.divider, lineWidth: 1)
         )
-        .shadow(color: Theme.cardShadow, radius: isPressed ? 2 : 6, y: isPressed ? 1 : 3)
-        .scaleEffect(isPressed ? 0.96 : 1.0)
-        .animation(Theme.springSnappy, value: isPressed)
-        .onLongPressGesture(minimumDuration: 0, pressing: { pressing in
-            isPressed = pressing
-        }, perform: {})
     }
 
-    // pick a SF symbol based on folder name — falls back to generic folder
     private func iconName(for name: String) -> String {
         let lower = name.lowercased()
         if lower == "/" || lower == "root" { return "doc.text.fill" }
